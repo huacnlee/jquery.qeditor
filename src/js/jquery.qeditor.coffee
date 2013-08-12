@@ -32,8 +32,8 @@ QEDITOR_TOOLBAR_HTML = """
   <span class="vline"></span> 
   <a href="#" onclick="return QEditor.action(this,'insertorderedlist');"><span class="icon-list-ol"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'insertunorderedlist');"><span class="icon-list-ul"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'indent')"><span class="icon-indent-left"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'outdent')"><span class="icon-indent-right"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'indent')"><span class="icon-indent-right"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'outdent')"><span class="icon-indent-left"></span></a> 
   <span class="vline"></span> 
   <a href="#" onclick="return QEditor.action(this,'insertHorizontalRule');"><span class="icon-minus"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'formatBlock','blockquote');"><span class="icon-quote-left"></span></a> 
