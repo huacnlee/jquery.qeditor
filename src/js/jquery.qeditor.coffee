@@ -38,8 +38,8 @@ QEDITOR_TOOLBAR_HTML = """
   <a href="#" onclick="return QEditor.action(this,'insertHorizontalRule');"><span class="icon-minus"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'formatBlock','blockquote');"><span class="icon-quote-left"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'formatBlock','PRE');"><span class="icon-code"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'createLink',prompt('URL'));"><span class="icon-link"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'insertimage',prompt('Image URL'));"><span class="icon-picture"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'createLink');"><span class="icon-link"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'insertimage');"><span class="icon-picture"></span></a> 
   <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="pull-right"><span class="icon-fullscreen"></span></a> 
 </div>
 """
@@ -52,10 +52,24 @@ window.QEditor =
     editor.focus()
     p = false if p == null
     
+    if a == "createLink"
+      p = prompt("Type URL:")
+      return false if p.trim().length == 0
+    else if a == "insertimage"
+      p = prompt("Image URL:")
+      return false if p.trim().length == 0
+    
     document.execCommand(a, false, p)
     editor.change() if editor != undefined
     false
-    
+  
+  prompt : (title) ->
+    val = prompt(title)
+    if val
+      return val
+    else
+      return false
+  
   toggleFullScreen : (el) ->
     editor = $(el).parent().parent()
     if editor.data("qe-fullscreen") == "1"
