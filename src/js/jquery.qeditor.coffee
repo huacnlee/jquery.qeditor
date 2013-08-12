@@ -25,22 +25,22 @@ In Rails application, you can use like this:
 
 QEDITOR_TOOLBAR_HTML = """
 <div class="qeditor_toolbar">
-  <a href="#" onclick="return QEditor.action(this,'bold');" title="Bold"><span class="icon-bold"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'italic');" title="Italic"><span class="icon-italic"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'underline');" title="Underline"><span class="icon-underline"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'strikethrough');" title="StrikeThrough"><span class="icon-strikethrough"></span></a>		 
+  <a href="#" onclick="return QEditor.action(this,'bold');" class="qe-bold"><span class="icon-bold"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'italic');" class="qe-italic"><span class="icon-italic"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'underline');" class="qe-underline"><span class="icon-underline"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'strikethrough');" class="qe-strikethrough"><span class="icon-strikethrough"></span></a>		 
   <span class="vline"></span> 
-  <a href="#" onclick="return QEditor.action(this,'insertorderedlist');"><span class="icon-list-ol"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'insertunorderedlist');"><span class="icon-list-ul"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'indent')"><span class="icon-indent-right"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'outdent')"><span class="icon-indent-left"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'insertorderedlist');" class="qe-ol"><span class="icon-list-ol"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'insertunorderedlist');" class="qe-ul"><span class="icon-list-ul"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'indent')" class="qe-indent"><span class="icon-indent-right"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'outdent')" class="qe-outdent"><span class="icon-indent-left"></span></a> 
   <span class="vline"></span> 
-  <a href="#" onclick="return QEditor.action(this,'insertHorizontalRule');"><span class="icon-minus"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'formatBlock','blockquote');"><span class="icon-quote-left"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'formatBlock','PRE');"><span class="icon-code"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'createLink');"><span class="icon-link"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'insertimage');"><span class="icon-picture"></span></a> 
-  <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qeditor_fullscreen_button pull-right"><span class="icon-fullscreen"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'insertHorizontalRule');" class="qe-hr"><span class="icon-minus"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'formatBlock','qe-blockquote');" class="blockquote"><span class="icon-quote-left"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'formatBlock','PRE');" class="qe-pre"><span class="icon-code"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'createLink');" class="qe-link"><span class="icon-link"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'insertimage');" class="qe-image"><span class="icon-picture"></span></a> 
+  <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qe-fullscreen pull-right"><span class="icon-fullscreen"></span></a> 
 </div>
 """
 QEDITOR_ALLOW_TAGS_ON_PASTE = "div,p,ul,ol,li,hr,br,b,strong,i,em,img,h2,h3,h4,h5,h6,h7"
@@ -83,12 +83,12 @@ window.QEditor =
     border.data("qe-fullscreen","1")
           .addClass("qeditor_fullscreen")
     border.find(".qeditor_preview").focus()
-    border.find(".qeditor_fullscreen_button span").attr("class","icon-resize-small")
+    border.find(".qe-fullscreen span").attr("class","icon-resize-small")
   
   exitFullScreen : () ->
     $(".qeditor_border").removeClass("qeditor_fullscreen")
                         .data("qe-fullscreen","0")
-                        .find(".qeditor_fullscreen_button span").attr("class","icon-fullscreen")
+                        .find(".qe-fullscreen span").attr("class","icon-fullscreen")
     
   version : ->
     "0.1.1"
