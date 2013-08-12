@@ -7,11 +7,13 @@ This is a simple WYSIWYG editor with jQuery.
 
 ## Featrues
 
-- Simple UI;
+- Simple UI, Simple Use;
 - Use font-awsome as toolbar icon;
 - Remove complex html tag, attributes on paste, this can make you web page clean;
-- Less code
+- Less code;
 - Use `<p>` not `<br>` on press `Enter`, This can help you make a neat layout;
+- PlaceHolder for WYSIWYG editor;
+- FullScreen;
 
 ## Browser support
 
