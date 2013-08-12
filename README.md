@@ -38,10 +38,12 @@ $("#post_body").qeditor({});
 ## How to add custom toolbar icon
 
 ```js
+// Custom a toolbar icon
 var toolbar = $("#post_body").parent().find(".qeditor_toolbar");
 var link = $("<a href='#'><span class='icon-smile'></span></a>");
 link.click(function(){
   alert("Put you custom toolbar event in here.");
+  return false;
 });
 toolbar.append(link);
 ```
