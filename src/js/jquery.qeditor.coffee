@@ -36,8 +36,8 @@ QEDITOR_TOOLBAR_HTML = """
   <a href="#" onclick="return QEditor.action(this,'outdent')" class="qe-outdent"><span class="icon-indent-left"></span></a> 
   <span class="vline"></span> 
   <a href="#" onclick="return QEditor.action(this,'insertHorizontalRule');" class="qe-hr"><span class="icon-minus"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'formatBlock','qe-blockquote');" class="blockquote"><span class="icon-quote-left"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'formatBlock','PRE');" class="qe-pre"><span class="icon-code"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'formatBlock','blockquote');" class="qe-blockquote"><span class="icon-quote-left"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'formatBlock','pre');" class="qe-pre"><span class="icon-code"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'createLink');" class="qe-link"><span class="icon-link"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'insertimage');" class="qe-image"><span class="icon-picture"></span></a> 
   <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qe-fullscreen pull-right"><span class="icon-fullscreen"></span></a> 
