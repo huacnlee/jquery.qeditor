@@ -90,83 +90,69 @@ window.QEditor =
                         .data("qe-fullscreen","0")
                         .find(".qeditor_fullscreen_button span").attr("class","icon-fullscreen")
     
-  renderToolbar : (el) ->
-    el.parent().prepend(QEDITOR_TOOLBAR_HTML)
-    
   version : ->
-    "0.1.0"
+    "0.1.1"
 
 
 (($) ->
   $.fn.qeditor = (options) ->
-    if options == false
-      this.each ->
-        obj = $(this)
-        obj.parent().find('.qeditor_toolbar').detach()
-        obj.parent().find('.qeditor_preview').detach()
-        obj.unwrap()
-    else
-      this.each ->
-        obj = $(this)
-        obj.addClass("qeditor")
-        if options && options["mobile"]
-           hidden_flag = $('<input type="hidden" name="did_editor_content_formatted" value="no">')
-           obj.after(hidden_flag)
-        else
-          editor = $('<div class="qeditor_preview clearfix" style="overflow:scroll;" contentEditable="true"></div>')
-          placeholder = $('<div class="qeditor_placeholder"></div>')
-          
-          $(document).keyup (e) ->
-            QEditor.exitFullScreen() if e.keyCode == 27
-            
-          # use <p> tag on enter by default
-          document.execCommand('defaultParagraphSeparator', false, 'p')
-          
-          currentVal = obj.val()
-          # if currentVal.trim().lenth == 0
-            # TODO: default value need in paragraph
-            # currentVal = "<p></p>"
-          
-          editor.html(currentVal)
-          editor.addClass(obj.attr("class"))
-          obj.after(editor)
-          
-          # add place holder
-          placeholder.text(obj.attr("placeholder"))
-          editor.attr("placeholder",obj.attr("placeholder"))
-          editor.append(placeholder)
-          editor.focusin ->
-            $(this).find(".qeditor_placeholder").remove()
-          editor.blur ->
-            t = $(this)
-            if t.text().length == 0
-              $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>' )
-          
-          # put value to origin textare when QEditor has changed value
-          editor.change ->
-            pobj = $(this);
-            t = pobj.parent().find('.qeditor')
-            t.val(pobj.html())
-          
-          # watch pasite event, to remove unsafe html tag, attributes
-          editor.on "paste", ->
-            txt = $(this)
-            setTimeout ->
-              els = txt.find("*")
-              for attrName in QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE
-                els.removeAttr(attrName)
-              els.find(":not("+ QEDITOR_ALLOW_TAGS_ON_PASTE +")").contents().unwrap()
-            ,100
-          
-          # attach change event on editor keyup
-          editor.keyup ->
-            $(this).change()
-            
-          editor.on "click", (e) ->
-            e.stopPropagation()
-            
-          obj.hide()
-	        obj.wrap('<div class="qeditor_border"></div>')
-	        obj.after(editor)
-	        QEditor.renderToolbar(editor)
+    this.each ->
+      obj = $(this)
+      obj.addClass("qeditor")
+      editor = $('<div class="qeditor_preview clearfix" style="overflow:scroll;" contentEditable="true"></div>')
+      placeholder = $('<div class="qeditor_placeholder"></div>')
+      
+      $(document).keyup (e) ->
+        QEditor.exitFullScreen() if e.keyCode == 27
+        
+      # use <p> tag on enter by default
+      document.execCommand('defaultParagraphSeparator', false, 'p')
+      
+      currentVal = obj.val()
+      # if currentVal.trim().lenth == 0
+        # TODO: default value need in paragraph
+        # currentVal = "<p></p>"
+      
+      editor.html(currentVal)
+      editor.addClass(obj.attr("class"))
+      obj.after(editor)
+      
+      # add place holder
+      placeholder.text(obj.attr("placeholder"))
+      editor.attr("placeholder",obj.attr("placeholder"))
+      editor.append(placeholder)
+      editor.focusin ->
+        $(this).find(".qeditor_placeholder").remove()
+      editor.blur ->
+        t = $(this)
+        if t.text().length == 0
+          $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>' )
+      
+      # put value to origin textare when QEditor has changed value
+      editor.change ->
+        pobj = $(this);
+        t = pobj.parent().find('.qeditor')
+        t.val(pobj.html())
+      
+      # watch pasite event, to remove unsafe html tag, attributes
+      editor.on "paste", ->
+        txt = $(this)
+        setTimeout ->
+          els = txt.find("*")
+          for attrName in QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE
+            els.removeAttr(attrName)
+          els.find(":not("+ QEDITOR_ALLOW_TAGS_ON_PASTE +")").contents().unwrap()
+        ,100
+      
+      # attach change event on editor keyup
+      editor.keyup ->
+        $(this).change()
+        
+      editor.on "click", (e) ->
+        e.stopPropagation()
+        
+      obj.hide()
+      obj.wrap('<div class="qeditor_border"></div>')
+      obj.after(editor)
+      editor.before(QEDITOR_TOOLBAR_HTML)
 )(jQuery)

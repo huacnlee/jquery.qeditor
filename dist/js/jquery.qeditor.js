@@ -87,95 +87,76 @@ window.QEditor = {
   exitFullScreen: function() {
     return $(".qeditor_border").removeClass("qeditor_fullscreen").data("qe-fullscreen", "0").find(".qeditor_fullscreen_button span").attr("class", "icon-fullscreen");
   },
-  renderToolbar: function(el) {
-    return el.parent().prepend(QEDITOR_TOOLBAR_HTML);
-  },
   version: function() {
-    return "0.1.0";
+    return "0.1.1";
   }
 };
 
 (function($) {
   return $.fn.qeditor = function(options) {
-    if (options === false) {
-      return this.each(function() {
-        var obj;
+    return this.each(function() {
+      var currentVal, editor, obj, placeholder;
 
-        obj = $(this);
-        obj.parent().find('.qeditor_toolbar').detach();
-        obj.parent().find('.qeditor_preview').detach();
-        return obj.unwrap();
-      });
-    } else {
-      return this.each(function() {
-        var currentVal, editor, hidden_flag, obj, placeholder;
-
-        obj = $(this);
-        obj.addClass("qeditor");
-        if (options && options["mobile"]) {
-          hidden_flag = $('<input type="hidden" name="did_editor_content_formatted" value="no">');
-          obj.after(hidden_flag);
-        } else {
-          editor = $('<div class="qeditor_preview clearfix" style="overflow:scroll;" contentEditable="true"></div>');
-          placeholder = $('<div class="qeditor_placeholder"></div>');
-          $(document).keyup(function(e) {
-            if (e.keyCode === 27) {
-              return QEditor.exitFullScreen();
-            }
-          });
-          document.execCommand('defaultParagraphSeparator', false, 'p');
-          currentVal = obj.val();
-          editor.html(currentVal);
-          editor.addClass(obj.attr("class"));
-          obj.after(editor);
-          placeholder.text(obj.attr("placeholder"));
-          editor.attr("placeholder", obj.attr("placeholder"));
-          editor.append(placeholder);
-          editor.focusin(function() {
-            return $(this).find(".qeditor_placeholder").remove();
-          });
-          editor.blur(function() {
-            var t;
-
-            t = $(this);
-            if (t.text().length === 0) {
-              return $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>');
-            }
-          });
-          editor.change(function() {
-            var pobj, t;
-
-            pobj = $(this);
-            t = pobj.parent().find('.qeditor');
-            return t.val(pobj.html());
-          });
-          editor.on("paste", function() {
-            var txt;
-
-            txt = $(this);
-            return setTimeout(function() {
-              var attrName, els, _i, _len;
-
-              els = txt.find("*");
-              for (_i = 0, _len = QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE.length; _i < _len; _i++) {
-                attrName = QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE[_i];
-                els.removeAttr(attrName);
-              }
-              return els.find(":not(" + QEDITOR_ALLOW_TAGS_ON_PASTE(+")")).contents().unwrap();
-            }, 100);
-          });
-          editor.keyup(function() {
-            return $(this).change();
-          });
-          editor.on("click", function(e) {
-            return e.stopPropagation();
-          });
-          obj.hide();
+      obj = $(this);
+      obj.addClass("qeditor");
+      editor = $('<div class="qeditor_preview clearfix" style="overflow:scroll;" contentEditable="true"></div>');
+      placeholder = $('<div class="qeditor_placeholder"></div>');
+      $(document).keyup(function(e) {
+        if (e.keyCode === 27) {
+          return QEditor.exitFullScreen();
         }
-        obj.wrap('<div class="qeditor_border"></div>');
-        obj.after(editor);
-        return QEditor.renderToolbar(editor);
       });
-    }
+      document.execCommand('defaultParagraphSeparator', false, 'p');
+      currentVal = obj.val();
+      editor.html(currentVal);
+      editor.addClass(obj.attr("class"));
+      obj.after(editor);
+      placeholder.text(obj.attr("placeholder"));
+      editor.attr("placeholder", obj.attr("placeholder"));
+      editor.append(placeholder);
+      editor.focusin(function() {
+        return $(this).find(".qeditor_placeholder").remove();
+      });
+      editor.blur(function() {
+        var t;
+
+        t = $(this);
+        if (t.text().length === 0) {
+          return $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>');
+        }
+      });
+      editor.change(function() {
+        var pobj, t;
+
+        pobj = $(this);
+        t = pobj.parent().find('.qeditor');
+        return t.val(pobj.html());
+      });
+      editor.on("paste", function() {
+        var txt;
+
+        txt = $(this);
+        return setTimeout(function() {
+          var attrName, els, _i, _len;
+
+          els = txt.find("*");
+          for (_i = 0, _len = QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE.length; _i < _len; _i++) {
+            attrName = QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE[_i];
+            els.removeAttr(attrName);
+          }
+          return els.find(":not(" + QEDITOR_ALLOW_TAGS_ON_PASTE(+")")).contents().unwrap();
+        }, 100);
+      });
+      editor.keyup(function() {
+        return $(this).change();
+      });
+      editor.on("click", function(e) {
+        return e.stopPropagation();
+      });
+      obj.hide();
+      obj.wrap('<div class="qeditor_border"></div>');
+      obj.after(editor);
+      return editor.before(QEDITOR_TOOLBAR_HTML);
+    });
   };
 })(jQuery);
