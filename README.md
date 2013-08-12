@@ -1,4 +1,4 @@
-jQuery.QEditor
+jquery.qeditor
 ==============
 
 This is a simple WYSIWYG editor with jQuery.

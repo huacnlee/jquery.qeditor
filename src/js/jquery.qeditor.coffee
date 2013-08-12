@@ -1,5 +1,5 @@
 ###
-jQuery.Qeditor
+jquery.qeditor
 ==============
 
 This is a simple WYSIWYG editor with jQuery.
