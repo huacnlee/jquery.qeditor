@@ -58,13 +58,36 @@
       </div>
       <div class="control-group">
         <div class="controls">
-          <button type="submit" class="btn btn-success">Submit</button>  
+          <button type="submit" id="submit" class="btn btn-success">Submit</button>  
+          <button class="btn" onclick="return changeInsertImageIconWithCustomEvent();">Change Insert Image</button>
         </div>
       </div>
     </form>
     <script type="text/javascript">
     $("#post_body").qeditor({});
-    $("button").click(function(){
+    
+    // Custom a toolbar icon
+    var toolbar = $("#post_body").parent().find(".qeditor_toolbar");
+    var link = $("<a href='#'><span class='icon-smile'></span></a>");
+    link.click(function(){
+      alert("Put you custom toolbar event in here.");
+      return false;
+    });
+    toolbar.append(link);
+    
+    // Custom Insert Image icon event
+    function changeInsertImageIconWithCustomEvent() {
+      var link = toolbar.find("a.qe-image");
+      link.attr("onclick","");
+      link.click(function(){
+        alert("New insert image event");
+        return false;
+      });
+      alert("Image icon event has changed, you can click it to test");
+      return false;
+    }
+    
+    $("#submit").click(function(){
       alert($("#post_body").val());
     });
     </script>
