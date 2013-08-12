@@ -3,8 +3,8 @@
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <title>jQuery.QEditor Example</title>
-  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-  <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+  <link href="http://cdn.staticfile.org/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://cdn.staticfile.org/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/jquery.qeditor.css" type="text/css">
   <style type="text/css" media="screen">
   .textarea {
@@ -26,9 +26,10 @@
     border-radius: 4px;
     vertical-align: middle;
     outline: none;
+    height: 400px;
   }
   </style>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
   <script src="js/jquery.qeditor.js" type="text/javascript"></script>
 </head>
 <body>
@@ -52,9 +53,7 @@
       <div class="control-group">
         <label class="control-label" for="post_body">Body</label>
         <div class="controls">
-           <textarea id="post_body" name="body" class="textarea" placeholder="Type your post">
-             <p>对于新入门的开发者，如何安装 Ruby, Ruby Gems 和 Rails 的运行环境可能会是个问题，本页主要介绍如何用一条靠谱的路子快速安装 Ruby 开发环境。<br>              次安装方法同样适用于产品环境！</p>               <h2>系统需求</h2>               <p>首先确定操作系统环境，不建议在 Windows 上面搞，所以你需要用:</p>               <ul>              <li>Mac OS X </li>              <li>任意 Linux 发行版本(<a href="http://ubuntu.com">Ubuntu</a>,<a href="http://www.centos.org">CentOS</a>, Redhat, ArchLinux ...)</li>              </ul>               <blockquote>              <p>强烈新手使用 Ubuntu 省掉不必要的麻烦！</p>              </blockquote>               <p><strong>以下代码区域，带有 $ 打头的表示需要在控制台（终端）下面执行（不包括 $ 符号）</strong></p>               <h2>步骤0 － 安装系统需要的包</h2>               <ul>              <li>Mac 请安装 <a href="http://developer.apple.com/xcode/">Xcode</a> 开发工具，它将帮你安装好 Unix 环境需要的开发包</li>              <li>Ubuntu 请安装</li>              </ul>              <pre class="highlight shell"><span class="nv">$ </span>sudo apt-get install -y build-essential openssl curl libcurl3-dev libreadline6 libreadline6-dev git zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf automake libtool imagemagick libmagickwand-dev libpcre3-dev libsqlite3-dev libmysql-ruby libmysqlclient-dev</pre>              <h2>步骤1 － 安装 RVM</h2>               <p>RVM 是干什么的这里就不解释了，后面你将会慢慢搞明白。</p>              <pre class="highlight shell"><span class="nv">$ </span>curl -L https://get.rvm.io | bash -s stable</pre>              <p>等待一段时间后就可以成功安装好 RVM。</p>               <p>然后，载入 RVM 环境（新开 Termal 就不用这么做了，会自动重新载入的）</p>              <pre class="highlight shell"><span class="nv">$ </span><span class="nb">source</span> ~/.rvm/scripts/rvm</pre>
-           </textarea>
+           <textarea id="post_body" name="body" class="textarea" placeholder="Type your post"></textarea>
         </div>
       </div>
       <div class="control-group">
