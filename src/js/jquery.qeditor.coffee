@@ -114,6 +114,7 @@ window.QEditor =
            obj.after(hidden_flag)
         else
           editor = $('<div class="qeditor_preview clearfix" style="overflow:scroll;" contentEditable="true"></div>')
+          placeholder = $('<div class="qeditor_placeholder"></div>')
           
           $(document).keyup (e) ->
             QEditor.exitFullScreen() if e.keyCode == 27
@@ -129,6 +130,17 @@ window.QEditor =
           editor.html(currentVal)
           editor.addClass(obj.attr("class"))
           obj.after(editor)
+          
+          # add place holder
+          placeholder.text(obj.attr("placeholder"))
+          editor.attr("placeholder",obj.attr("placeholder"))
+          editor.append(placeholder)
+          editor.focusin ->
+            $(this).find(".qeditor_placeholder").remove()
+          editor.blur ->
+            t = $(this)
+            if t.text().length == 0
+              $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>' )
           
           # put value to origin textare when QEditor has changed value
           editor.change ->

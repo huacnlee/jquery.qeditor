@@ -2,6 +2,7 @@
   background:#FFF;
   padding-bottom:20px;
   text-align: center;
+  position: relative;
 }
 .qeditor_toolbar { 
   text-align: left;
@@ -19,6 +20,7 @@
   }
 }
 .qeditor_preview { text-align: left; min-height:80px; margin:0 auto; }
+.qeditor_placeholder { color:#999; }
 .qeditor_fullscreen {
   position: fixed;
   background:#FFF;

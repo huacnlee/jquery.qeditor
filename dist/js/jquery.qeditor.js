@@ -108,7 +108,7 @@ window.QEditor = {
       });
     } else {
       return this.each(function() {
-        var currentVal, editor, hidden_flag, obj;
+        var currentVal, editor, hidden_flag, obj, placeholder;
 
         obj = $(this);
         obj.addClass("qeditor");
@@ -117,6 +117,7 @@ window.QEditor = {
           obj.after(hidden_flag);
         } else {
           editor = $('<div class="qeditor_preview clearfix" style="overflow:scroll;" contentEditable="true"></div>');
+          placeholder = $('<div class="qeditor_placeholder"></div>');
           $(document).keyup(function(e) {
             if (e.keyCode === 27) {
               return QEditor.exitFullScreen();
@@ -127,6 +128,20 @@ window.QEditor = {
           editor.html(currentVal);
           editor.addClass(obj.attr("class"));
           obj.after(editor);
+          placeholder.text(obj.attr("placeholder"));
+          editor.attr("placeholder", obj.attr("placeholder"));
+          editor.append(placeholder);
+          editor.focusin(function() {
+            return $(this).find(".qeditor_placeholder").remove();
+          });
+          editor.blur(function() {
+            var t;
+
+            t = $(this);
+            if (t.text().length === 0) {
+              return $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>');
+            }
+          });
           editor.change(function() {
             var pobj, t;
 
