@@ -40,7 +40,7 @@ QEDITOR_TOOLBAR_HTML = """
   <a href="#" onclick="return QEditor.action(this,'formatBlock','PRE');"><span class="icon-code"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'createLink');"><span class="icon-link"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'insertimage');"><span class="icon-picture"></span></a> 
-  <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="pull-right"><span class="icon-fullscreen"></span></a> 
+  <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qeditor_fullscreen_button pull-right"><span class="icon-fullscreen"></span></a> 
 </div>
 """
 QEDITOR_ALLOW_TAGS_ON_PASTE = "div,p,ul,ol,li,hr,br,b,strong,i,em,img,h2,h3,h4,h5,h6,h7"
@@ -71,28 +71,24 @@ window.QEditor =
       return false
   
   toggleFullScreen : (el) ->
-    editor = $(el).parent().parent()
-    if editor.data("qe-fullscreen") == "1"
-      editor.css("width",editor.data("qe-width"))
-            .css("height",editor.data("qe-height"))
-            .css("top",editor.data("qe-top"))
-            .css("left",editor.data("qe-left"))
-            .css("position","static")
-            .css("z-index",0)
-            .data("qe-fullscreen","0")
+    border = $(el).parent().parent()
+    if border.data("qe-fullscreen") == "1"
+      QEditor.exitFullScreen()
     else
-      editor.data("qe-width",editor.width())
-            .data("qe-height",editor.height())
-            .data("qe-top",editor.position().top)
-            .data("qe-left",editor.position().left)
-            .data("qe-fullscreen","1")
-            .css("top",0)
-            .css("left",0)
-            .css("position","absolute")
-            .css("z-index",99999)
-            .css("width",$(window).width())
-            .css("height",$(window).height())
+      QEditor.enterFullScreen(border)
+
     false
+  
+  enterFullScreen : (border) ->
+    border.data("qe-fullscreen","1")
+          .addClass("qeditor_fullscreen")
+    border.find(".qeditor_preview").focus()
+    border.find(".qeditor_fullscreen_button span").attr("class","icon-resize-small")
+  
+  exitFullScreen : () ->
+    $(".qeditor_border").removeClass("qeditor_fullscreen")
+                        .data("qe-fullscreen","0")
+                        .find(".qeditor_fullscreen_button span").attr("class","icon-fullscreen")
     
   renderToolbar : (el) ->
     el.parent().prepend(QEDITOR_TOOLBAR_HTML)
@@ -119,6 +115,9 @@ window.QEditor =
         else
           editor = $('<div class="qeditor_preview clearfix" style="overflow:scroll;" contentEditable="true"></div>')
           
+          $(document).keyup (e) ->
+            QEditor.exitFullScreen() if e.keyCode == 27
+            
           # use <p> tag on enter by default
           document.execCommand('defaultParagraphSeparator', false, 'p')
           
