@@ -11,6 +11,7 @@ This is a simple WYSIWYG editor with jQuery.
 - Use font-awsome as toolbar icon;
 - Remove complex html tag, attributes on paste, this can make you web page clean;
 - Less code
+- Use <p> not <br> on press `Enter`, This can help you make a neat layout;
 
 ## Demo
 
