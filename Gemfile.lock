@@ -1,0 +1,22 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.6.3)
+    execjs (1.4.0)
+      multi_json (~> 1.0)
+    multi_json (1.7.9)
+    rake (10.1.0)
+    rb-fsevent (0.9.3)
+    sass (3.2.10)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  coffee-script
+  rake
+  rb-fsevent (~> 0.9)
+  sass
