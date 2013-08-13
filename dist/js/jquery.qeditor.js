@@ -26,7 +26,7 @@ In Rails application, you can use like this:
 
 var QEDITOR_ALLOW_TAGS_ON_PASTE, QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE, QEDITOR_TOOLBAR_HTML;
 
-QEDITOR_TOOLBAR_HTML = "<div class=\"qeditor_toolbar\">\n  <a href=\"#\" onclick=\"return QEditor.action(this,'bold');\" class=\"qe-bold\"><span class=\"icon-bold\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'italic');\" class=\"qe-italic\"><span class=\"icon-italic\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'underline');\" class=\"qe-underline\"><span class=\"icon-underline\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'strikethrough');\" class=\"qe-strikethrough\"><span class=\"icon-strikethrough\"></span></a>		 \n  <span class=\"vline\"></span> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'insertorderedlist');\" class=\"qe-ol\"><span class=\"icon-list-ol\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'insertunorderedlist');\" class=\"qe-ul\"><span class=\"icon-list-ul\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'indent')\" class=\"qe-indent\"><span class=\"icon-indent-right\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'outdent')\" class=\"qe-outdent\"><span class=\"icon-indent-left\"></span></a> \n  <span class=\"vline\"></span> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'insertHorizontalRule');\" class=\"qe-hr\"><span class=\"icon-minus\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'formatBlock','blockquote');\" class=\"qe-blockquote\"><span class=\"icon-quote-left\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'formatBlock','pre');\" class=\"qe-pre\"><span class=\"icon-code\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'createLink');\" class=\"qe-link\"><span class=\"icon-link\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'insertimage');\" class=\"qe-image\"><span class=\"icon-picture\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.toggleFullScreen(this);\" class=\"qe-fullscreen pull-right\"><span class=\"icon-fullscreen\"></span></a> \n</div>";
+QEDITOR_TOOLBAR_HTML = "<div class=\"qeditor_toolbar\">\n  <a href=\"#\" onclick=\"return QEditor.action(this,'bold');\" class=\"qe-bold\"><span class=\"icon-bold\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'italic');\" class=\"qe-italic\"><span class=\"icon-italic\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'underline');\" class=\"qe-underline\"><span class=\"icon-underline\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'strikethrough');\" class=\"qe-strikethrough\"><span class=\"icon-strikethrough\"></span></a>		 \n  <span class=\"vline\"></span>\n  <span class=\"qe-icon qe-heading\">\n    <ul class=\"qe-menu\">\n      <li><a href=\"#\" data-name=\"h1\" class=\"qe-h1\">Heading 1</a></li>\n      <li><a href=\"#\" data-name=\"h2\" class=\"qe-h2\">Heading 2</a></li>\n      <li><a href=\"#\" data-name=\"h3\" class=\"qe-h3\">Heading 3</a></li>\n      <li><a href=\"#\" data-name=\"h4\" class=\"qe-h4\">Heading 4</a></li>\n      <li><a href=\"#\" data-name=\"h5\" class=\"qe-h5\">Heading 5</a></li>\n      <li><a href=\"#\" data-name=\"h6\" class=\"qe-h6\">Heading 6</a></li>\n      <li class=\"hline\"></li>\n      <li><a href=\"#\" data-name=\"p\" class=\"qe-p\">Paragraph</a></li>\n    </ul>\n    <span class=\"icon icon-font\"></span>\n  </span>\n  <span class=\"vline\"></span>\n  <a href=\"#\" onclick=\"return QEditor.action(this,'insertorderedlist');\" class=\"qe-ol\"><span class=\"icon-list-ol\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'insertunorderedlist');\" class=\"qe-ul\"><span class=\"icon-list-ul\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'indent')\" class=\"qe-indent\"><span class=\"icon-indent-right\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'outdent')\" class=\"qe-outdent\"><span class=\"icon-indent-left\"></span></a> \n  <span class=\"vline\"></span> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'insertHorizontalRule');\" class=\"qe-hr\"><span class=\"icon-minus\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'formatBlock','blockquote');\" class=\"qe-blockquote\"><span class=\"icon-quote-left\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'formatBlock','pre');\" class=\"qe-pre\"><span class=\"icon-code\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'createLink');\" class=\"qe-link\"><span class=\"icon-link\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.action(this,'insertimage');\" class=\"qe-image\"><span class=\"icon-picture\"></span></a> \n  <a href=\"#\" onclick=\"return QEditor.toggleFullScreen(this);\" class=\"qe-fullscreen pull-right\"><span class=\"icon-fullscreen\"></span></a> \n</div>";
 
 QEDITOR_ALLOW_TAGS_ON_PASTE = "div,p,ul,ol,li,hr,br,b,strong,i,em,img,h2,h3,h4,h5,h6,h7";
 
@@ -95,7 +95,7 @@ window.QEditor = {
 (function($) {
   return $.fn.qeditor = function(options) {
     return this.each(function() {
-      var currentVal, editor, obj, placeholder;
+      var currentVal, editor, obj, placeholder, toolbar;
 
       obj = $(this);
       obj.addClass("qeditor");
@@ -156,7 +156,22 @@ window.QEditor = {
       obj.hide();
       obj.wrap('<div class="qeditor_border"></div>');
       obj.after(editor);
-      return editor.before(QEDITOR_TOOLBAR_HTML);
+      toolbar = $(QEDITOR_TOOLBAR_HTML);
+      toolbar.find(".qe-heading").mouseenter(function() {
+        return $(this).find(".qe-menu").show();
+      });
+      toolbar.find(".qe-heading").mouseleave(function() {
+        return $(this).find(".qe-menu").hide();
+      });
+      toolbar.find(".qe-heading .qe-menu a").click(function() {
+        var link;
+
+        link = $(this);
+        link.parent().parent().hide();
+        QEditor.action(this, "formatBlock", link.data("name"));
+        return false;
+      });
+      return editor.before(toolbar);
     });
   };
 })(jQuery);

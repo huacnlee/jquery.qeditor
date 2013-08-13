@@ -29,7 +29,21 @@ QEDITOR_TOOLBAR_HTML = """
   <a href="#" onclick="return QEditor.action(this,'italic');" class="qe-italic"><span class="icon-italic"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'underline');" class="qe-underline"><span class="icon-underline"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'strikethrough');" class="qe-strikethrough"><span class="icon-strikethrough"></span></a>		 
-  <span class="vline"></span> 
+  <span class="vline"></span>
+  <span class="qe-icon qe-heading">
+    <ul class="qe-menu">
+      <li><a href="#" data-name="h1" class="qe-h1">Heading 1</a></li>
+      <li><a href="#" data-name="h2" class="qe-h2">Heading 2</a></li>
+      <li><a href="#" data-name="h3" class="qe-h3">Heading 3</a></li>
+      <li><a href="#" data-name="h4" class="qe-h4">Heading 4</a></li>
+      <li><a href="#" data-name="h5" class="qe-h5">Heading 5</a></li>
+      <li><a href="#" data-name="h6" class="qe-h6">Heading 6</a></li>
+      <li class="hline"></li>
+      <li><a href="#" data-name="p" class="qe-p">Paragraph</a></li>
+    </ul>
+    <span class="icon icon-font"></span>
+  </span>
+  <span class="vline"></span>
   <a href="#" onclick="return QEditor.action(this,'insertorderedlist');" class="qe-ol"><span class="icon-list-ol"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'insertunorderedlist');" class="qe-ul"><span class="icon-list-ul"></span></a> 
   <a href="#" onclick="return QEditor.action(this,'indent')" class="qe-indent"><span class="icon-indent-right"></span></a> 
@@ -154,5 +168,15 @@ window.QEditor =
       obj.hide()
       obj.wrap('<div class="qeditor_border"></div>')
       obj.after(editor)
-      editor.before(QEDITOR_TOOLBAR_HTML)
+      toolbar = $(QEDITOR_TOOLBAR_HTML)
+      toolbar.find(".qe-heading").mouseenter ->
+        $(this).find(".qe-menu").show()
+      toolbar.find(".qe-heading").mouseleave ->
+        $(this).find(".qe-menu").hide()
+      toolbar.find(".qe-heading .qe-menu a").click ->
+        link = $(this)
+        link.parent().parent().hide()
+        QEditor.action(this,"formatBlock",link.data("name"))
+        return false
+      editor.before(toolbar)
 )(jQuery)
