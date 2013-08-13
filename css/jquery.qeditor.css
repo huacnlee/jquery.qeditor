@@ -10,12 +10,12 @@
   margin: 0 auto 3px auto; }
   .qeditor_toolbar span.vline {
     border-left: 1px solid #bbb;
-    padding-right: 11px; }
+    padding-right: 10px; }
   .qeditor_toolbar a, .qeditor_toolbar .qe-icon {
     color: #444;
     text-decoration: none;
     font-size: 14px;
-    margin-right: 6px; }
+    margin-right: 8px; }
     .qeditor_toolbar a:hover, .qeditor_toolbar .qe-icon:hover {
       color: #000; }
   .qeditor_toolbar .qe-heading {
@@ -27,8 +27,10 @@
       left: -25px;
       top: 15px;
       border: 1px solid #eee;
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
       z-index: 9991;
-      background: rgba(255, 255, 255, 0.7);
+      background: #FFF;
       list-style: none; }
       .qeditor_toolbar .qe-heading .qe-menu li {
         display: inline;
@@ -58,17 +60,14 @@
       .qeditor_toolbar .qe-heading .qe-menu .qe-h6 {
         font-size: 12px;
         font-weight: bold; }
-      .qeditor_toolbar .qe-heading .qe-menu .qe-hline {
-        border-top: 1px solid #ddd;
-        margin: 0 -10px;
-        margin-bottom: 5px;
-        margin-top: 5px; }
       .qeditor_toolbar .qe-heading .qe-menu .qe-p {
-        font-size: 12px; }
-    .qeditor_toolbar .qe-heading:hover .icon {
+        font-size: 12px;
+        border-top: 1px solid #eee; }
+    .qeditor_toolbar .qe-heading.hover {
       background: #eee; }
-    .qeditor_toolbar .qe-heading:hover .qe-menu {
-      display: block; }
+      .qeditor_toolbar .qe-heading.hover .qe-menu {
+        background: #fff;
+        display: block; }
 
 .qeditor_preview {
   text-align: left;
@@ -109,6 +108,6 @@
     box-sizing: border-box;
     width: 100%;
     padding-bottom: 10px; }
-    .qeditor_fullscreen .qeditor_toolbar a {
+    .qeditor_fullscreen .qeditor_toolbar a, .qeditor_fullscreen .qeditor_toolbar .qe-icon {
       font-size: 18px;
       margin-right: 8px; }
