@@ -87,6 +87,15 @@ window.QEditor = {
   exitFullScreen: function() {
     return $(".qeditor_border").removeClass("qeditor_fullscreen").data("qe-fullscreen", "0").find(".qe-fullscreen span").attr("class", "icon-fullscreen");
   },
+  getCurrentContainerNode: function() {
+    var containerNode, node;
+
+    if (window.getSelection) {
+      node = window.getSelection().anchorNode;
+      containerNode = node.nodeType === 3 ? node.parentNode : node;
+    }
+    return containerNode;
+  },
   version: function() {
     return "0.1.1";
   }
@@ -152,6 +161,24 @@ window.QEditor = {
       });
       editor.on("click", function(e) {
         return e.stopPropagation();
+      });
+      editor.keydown(function(e) {
+        var node, nodeName;
+
+        node = QEditor.getCurrentContainerNode();
+        nodeName = "";
+        if (node && node.nodeName) {
+          nodeName = node.nodeName.toLowerCase();
+        }
+        if (e.keyCode === 13 && !(e.shiftKey || e.ctrlKey)) {
+          if (nodeName === "blockquote" || nodeName === "pre") {
+            e.stopPropagation();
+            document.execCommand('InsertParagraph', false);
+            document.execCommand("formatBlock", false, "p");
+            document.execCommand('outdent', false);
+            return false;
+          }
+        }
       });
       obj.hide();
       obj.wrap('<div class="qeditor_border"></div>');
