@@ -3,6 +3,8 @@ jquery.qeditor
 
 This is a simple WYSIWYG editor with jQuery.
 
+[中文介绍请点这里](http://huacnlee.com/blog/jquery-qeditor-introduction/)
+
 <img src="https://f.cloud.github.com/assets/5518/945320/a8f55670-0303-11e3-8cd5-a77e94a85dbf.png" width="626" />
 
 ## Featrues
