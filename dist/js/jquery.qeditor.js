@@ -99,7 +99,7 @@ window.QEditor = {
 
       obj = $(this);
       obj.addClass("qeditor");
-      editor = $('<div class="qeditor_preview clearfix" style="overflow:scroll;" contentEditable="true"></div>');
+      editor = $('<div class="qeditor_preview clearfix" contentEditable="true"></div>');
       placeholder = $('<div class="qeditor_placeholder"></div>');
       $(document).keyup(function(e) {
         if (e.keyCode === 27) {

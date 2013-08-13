@@ -19,7 +19,12 @@
     }
   }
 }
-.qeditor_preview { text-align: left; min-height:80px; margin:0 auto; }
+.qeditor_preview { 
+  text-align: left;
+  min-height:80px; 
+  margin:0 auto; 
+  overflow-y:scroll;
+}
 .qeditor_placeholder { color:#999; }
 .qeditor_fullscreen {
   position: fixed;
