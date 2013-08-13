@@ -147,7 +147,7 @@ window.QEditor = {
           return els.find(":not(" + QEDITOR_ALLOW_TAGS_ON_PASTE(+")")).contents().unwrap();
         }, 100);
       });
-      editor.keyup(function() {
+      editor.keyup(function(e) {
         return $(this).change();
       });
       editor.on("click", function(e) {

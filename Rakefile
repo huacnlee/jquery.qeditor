@@ -8,16 +8,13 @@ task :build do
 end
 
 task :watch do
-	 print "Starting watching."
-   Thread.new do
-     # In child
-    `bundle exec sass --scss --watch src/css:dist/css --cache-location tmp/cache/sass`
-   end
-   print "."
-   
-   Thread.new do
-     # In child
-     `bundle exec coffee -w -b -c -o dist/js src/js`
-   end
-	 print "."
+  Process.fork do
+    # In child
+   exec("bundle exec sass --scss --watch src/css:dist/css --cache-location tmp/cache/sass")
+  end
+  
+  Process.fork do
+    exec("bundle exec coffee -w -b -c -o dist/js src/js")
+  end
+  Process.waitall
 end

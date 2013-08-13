@@ -145,7 +145,7 @@ window.QEditor =
         ,100
       
       # attach change event on editor keyup
-      editor.keyup ->
+      editor.keyup (e) ->
         $(this).change()
         
       editor.on "click", (e) ->
