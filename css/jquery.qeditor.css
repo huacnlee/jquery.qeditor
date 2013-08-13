@@ -11,18 +11,70 @@
   .qeditor_toolbar span.vline {
     border-left: 1px solid #bbb;
     padding-right: 11px; }
-  .qeditor_toolbar a {
+  .qeditor_toolbar a, .qeditor_toolbar .qe-icon {
     color: #444;
     text-decoration: none;
     font-size: 14px;
     margin-right: 6px; }
-    .qeditor_toolbar a:hover {
+    .qeditor_toolbar a:hover, .qeditor_toolbar .qe-icon:hover {
       color: #000; }
+  .qeditor_toolbar .qe-heading {
+    position: relative; }
+    .qeditor_toolbar .qe-heading .qe-menu {
+      width: 120px;
+      display: none;
+      position: absolute;
+      left: -25px;
+      top: 15px;
+      border: 1px solid #eee;
+      z-index: 9991;
+      background: rgba(255, 255, 255, 0.7);
+      list-style: none; }
+      .qeditor_toolbar .qe-heading .qe-menu li {
+        display: inline;
+        padding: 0;
+        margin: 0; }
+      .qeditor_toolbar .qe-heading .qe-menu a {
+        display: block;
+        margin: 0;
+        padding: 2px 10px; }
+        .qeditor_toolbar .qe-heading .qe-menu a:hover {
+          background: #f0f0f0; }
+      .qeditor_toolbar .qe-heading .qe-menu .qe-h1 {
+        font-size: 17px;
+        font-weight: bold; }
+      .qeditor_toolbar .qe-heading .qe-menu .qe-h2 {
+        font-size: 16px;
+        font-weight: bold; }
+      .qeditor_toolbar .qe-heading .qe-menu .qe-h3 {
+        font-size: 15px;
+        font-weight: bold; }
+      .qeditor_toolbar .qe-heading .qe-menu .qe-h4 {
+        font-size: 14px;
+        font-weight: bold; }
+      .qeditor_toolbar .qe-heading .qe-menu .qe-h5 {
+        font-size: 13px;
+        font-weight: bold; }
+      .qeditor_toolbar .qe-heading .qe-menu .qe-h6 {
+        font-size: 12px;
+        font-weight: bold; }
+      .qeditor_toolbar .qe-heading .qe-menu .qe-hline {
+        border-top: 1px solid #ddd;
+        margin: 0 -10px;
+        margin-bottom: 5px;
+        margin-top: 5px; }
+      .qeditor_toolbar .qe-heading .qe-menu .qe-p {
+        font-size: 12px; }
+    .qeditor_toolbar .qe-heading:hover .icon {
+      background: #eee; }
+    .qeditor_toolbar .qe-heading:hover .qe-menu {
+      display: block; }
 
 .qeditor_preview {
   text-align: left;
   min-height: 80px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  overflow-y: scroll; }
 
 .qeditor_placeholder {
   color: #999; }
