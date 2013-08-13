@@ -104,6 +104,12 @@ window.QEditor =
                         .data("qe-fullscreen","0")
                         .find(".qe-fullscreen span").attr("class","icon-fullscreen")
     
+  getCurrentContainerNode : () ->
+    if window.getSelection
+      node = window.getSelection().anchorNode
+      containerNode = if node.nodeType == 3 then node.parentNode else node
+    return containerNode
+    
   version : ->
     "0.1.1"
 
@@ -165,9 +171,25 @@ window.QEditor =
       editor.on "click", (e) ->
         e.stopPropagation()
         
+      editor.keydown (e) ->
+        node = QEditor.getCurrentContainerNode()
+        nodeName = ""
+        if node and node.nodeName
+          nodeName = node.nodeName.toLowerCase()
+        if e.keyCode == 13 && !(e.shiftKey or e.ctrlKey)
+          if nodeName == "blockquote" or nodeName == "pre"
+            e.stopPropagation()
+            document.execCommand('InsertParagraph',false)
+            document.execCommand("formatBlock",false,"p")
+            document.execCommand('outdent',false)
+            return false             
+            
+        
       obj.hide()
       obj.wrap('<div class="qeditor_border"></div>')
       obj.after(editor)
+      
+      # render toolbar & binding events
       toolbar = $(QEDITOR_TOOLBAR_HTML)
       toolbar.find(".qe-heading").mouseenter ->
         $(this).find(".qe-menu").show()
