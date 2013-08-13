@@ -8,12 +8,12 @@
   text-align: left;
   background:#FFF;
   margin: 0 auto 3px auto;
-  span.vline { border-left:1px solid #bbb; padding-right:11px; }
+  span.vline { border-left:1px solid #bbb; padding-right:10px; }
   a,.qe-icon {
     color: #444;
     text-decoration: none;
     font-size:14px;
-    margin-right:6px;
+    margin-right:8px;
     &:hover {
       color: #000;
     }
@@ -27,8 +27,10 @@
       position: absolute;
       left:-25px; top:15px;
       border:1px solid #eee;
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
       z-index:9991;
-      background:rgba(255,255,255,0.7);
+      background:#FFF;
       list-style: none;
       li { display:inline; padding:0; margin:0; }
       a { 
@@ -45,12 +47,12 @@
       .qe-h4 { font-size:14px; font-weight:bold; }
       .qe-h5 { font-size:13px; font-weight:bold; }
       .qe-h6 { font-size:12px; font-weight:bold; }
-      .qe-hline { border-top:1px solid #ddd; margin:0 -10px; margin-bottom:5px; margin-top:5px;}
-      .qe-p { font-size:12px; }
+      .qe-p { font-size:12px; border-top:1px solid #eee; }
     }
-    &:hover {
-      .icon { background:#eee; }
+    &.hover {
+      background:#eee;
       .qe-menu {
+        background:#fff;
         display:block;
       }
     }
@@ -93,6 +95,6 @@
     box-sizing: border-box;
     width: 100%;
     padding-bottom:10px;
-    a { font-size:18px; margin-right:8px; }
+    a,.qe-icon { font-size:18px; margin-right:8px; }
   }
 }

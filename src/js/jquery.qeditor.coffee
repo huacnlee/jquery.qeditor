@@ -38,7 +38,7 @@ QEDITOR_TOOLBAR_HTML = """
       <li><a href="#" data-name="h4" class="qe-h4">Heading 4</a></li>
       <li><a href="#" data-name="h5" class="qe-h5">Heading 5</a></li>
       <li><a href="#" data-name="h6" class="qe-h6">Heading 6</a></li>
-      <li class="hline"></li>
+      <li class="qe-hline"></li>
       <li><a href="#" data-name="p" class="qe-p">Paragraph</a></li>
     </ul>
     <span class="icon icon-font"></span>
@@ -191,9 +191,12 @@ window.QEditor =
       
       # render toolbar & binding events
       toolbar = $(QEDITOR_TOOLBAR_HTML)
-      toolbar.find(".qe-heading").mouseenter ->
+      qe_heading = toolbar.find(".qe-heading")
+      qe_heading.mouseenter ->
+        $(this).addClass("hover")
         $(this).find(".qe-menu").show()
-      toolbar.find(".qe-heading").mouseleave ->
+      qe_heading.mouseleave ->
+        $(this).removeClass("hover")
         $(this).find(".qe-menu").hide()
       toolbar.find(".qe-heading .qe-menu a").click ->
         link = $(this)
