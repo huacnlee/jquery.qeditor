@@ -51,6 +51,14 @@ toolbar.append(link);
 ```
 
 
+## Build
+
+```
+$ bundle install
+$ rake watch # or use "rake build" to release
+``` 
+
+
 ## License
 
 Apache V2 : http://choosealicense.com/licenses/apache
