@@ -63,6 +63,7 @@ QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE = ["style","class","id","name","width","heig
 window.QEditor = 
   action : (el,a,p) ->
     editor = $(".qeditor_preview",$(el).parent().parent())
+    editor.find(".qeditor_placeholder").remove()
     editor.focus()
     p = false if p == null
     
@@ -74,7 +75,7 @@ window.QEditor =
       return false if p.trim().length == 0
     
     document.execCommand(a, false, p)
-    editor.change() if editor != undefined
+    editor.change()
     false
   
   prompt : (title) ->
@@ -145,7 +146,7 @@ window.QEditor =
         $(this).find(".qeditor_placeholder").remove()
       editor.blur ->
         t = $(this)
-        if t.text().length == 0
+        if t.html().length == 0 or t.html() == "<br>" or t.html() == "<p></p>" 
           $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>' )
       
       # put value to origin textare when QEditor has changed value

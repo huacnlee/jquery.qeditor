@@ -37,6 +37,7 @@ window.QEditor = {
     var editor;
 
     editor = $(".qeditor_preview", $(el).parent().parent());
+    editor.find(".qeditor_placeholder").remove();
     editor.focus();
     if (p === null) {
       p = false;
@@ -53,9 +54,7 @@ window.QEditor = {
       }
     }
     document.execCommand(a, false, p);
-    if (editor !== void 0) {
-      editor.change();
-    }
+    editor.change();
     return false;
   },
   prompt: function(title) {
@@ -130,7 +129,7 @@ window.QEditor = {
         var t;
 
         t = $(this);
-        if (t.text().length === 0) {
+        if (t.html().length === 0 || t.html() === "<br>" || t.html() === "<p></p>") {
           return $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>');
         }
       });
