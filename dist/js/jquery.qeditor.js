@@ -152,7 +152,9 @@ window.QEditor = {
             attrName = QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE[_i];
             els.removeAttr(attrName);
           }
-          return els.find(":not(" + QEDITOR_ALLOW_TAGS_ON_PASTE(+")")).contents().unwrap();
+          els.find(":not(" + QEDITOR_ALLOW_TAGS_ON_PASTE + ")").contents().unwrap();
+          txt.change();
+          return true;
         }, 100);
       });
       editor.keyup(function(e) {

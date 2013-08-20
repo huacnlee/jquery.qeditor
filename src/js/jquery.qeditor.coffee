@@ -114,30 +114,29 @@ window.QEditor =
   version : ->
     "0.1.1"
 
-
-(($) ->
+do ($=jQuery)->
   $.fn.qeditor = (options) ->
     this.each ->
       obj = $(this)
       obj.addClass("qeditor")
       editor = $('<div class="qeditor_preview clearfix" contentEditable="true"></div>')
       placeholder = $('<div class="qeditor_placeholder"></div>')
-      
+    
       $(document).keyup (e) ->
         QEditor.exitFullScreen() if e.keyCode == 27
-        
+      
       # use <p> tag on enter by default
       document.execCommand('defaultParagraphSeparator', false, 'p')
-      
+    
       currentVal = obj.val()
       # if currentVal.trim().lenth == 0
         # TODO: default value need in paragraph
         # currentVal = "<p></p>"
-      
+    
       editor.html(currentVal)
       editor.addClass(obj.attr("class"))
       obj.after(editor)
-      
+    
       # add place holder
       placeholder.text(obj.attr("placeholder"))
       editor.attr("placeholder",obj.attr("placeholder"))
@@ -148,13 +147,13 @@ window.QEditor =
         t = $(this)
         if t.html().length == 0 or t.html() == "<br>" or t.html() == "<p></p>" 
           $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>' )
-      
+    
       # put value to origin textare when QEditor has changed value
       editor.change ->
         pobj = $(this);
         t = pobj.parent().find('.qeditor')
         t.val(pobj.html())
-      
+    
       # watch pasite event, to remove unsafe html tag, attributes
       editor.on "paste", ->
         txt = $(this)
@@ -162,16 +161,18 @@ window.QEditor =
           els = txt.find("*")
           for attrName in QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE
             els.removeAttr(attrName)
-          els.find(":not("+ QEDITOR_ALLOW_TAGS_ON_PASTE +")").contents().unwrap()
+          els.find(":not(#{QEDITOR_ALLOW_TAGS_ON_PASTE})").contents().unwrap()
+          txt.change()
+          true
         ,100
-      
+    
       # attach change event on editor keyup
       editor.keyup (e) ->
         $(this).change()
-        
+      
       editor.on "click", (e) ->
         e.stopPropagation()
-        
+      
       editor.keydown (e) ->
         node = QEditor.getCurrentContainerNode()
         nodeName = ""
@@ -184,12 +185,12 @@ window.QEditor =
             document.execCommand("formatBlock",false,"p")
             document.execCommand('outdent',false)
             return false             
-            
-        
+          
+      
       obj.hide()
       obj.wrap('<div class="qeditor_border"></div>')
       obj.after(editor)
-      
+    
       # render toolbar & binding events
       toolbar = $(QEDITOR_TOOLBAR_HTML)
       qe_heading = toolbar.find(".qe-heading")
@@ -205,4 +206,3 @@ window.QEditor =
         QEditor.action(this,"formatBlock",link.data("name"))
         return false
       editor.before(toolbar)
-)(jQuery)
