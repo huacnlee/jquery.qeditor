@@ -25,10 +25,10 @@ In Rails application, you can use like this:
 
 QEDITOR_TOOLBAR_HTML = """
 <div class="qeditor_toolbar">
-  <a href="#" onclick="return QEditor.action(this,'bold');" class="qe-bold"><span class="icon-bold"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'italic');" class="qe-italic"><span class="icon-italic"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'underline');" class="qe-underline"><span class="icon-underline"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'strikethrough');" class="qe-strikethrough"><span class="icon-strikethrough"></span></a>		 
+  <a href="#" onclick="return QEditor.action(this,'bold');" class="qe-bold"><span class="icon-bold" title="Bold"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'italic');" class="qe-italic"><span class="icon-italic" title="Italic"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'underline');" class="qe-underline"><span class="icon-underline" title="Underline"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'strikethrough');" class="qe-strikethrough"><span class="icon-strikethrough" title="Strike-through"></span></a>		 
   <span class="vline"></span>
   <span class="qe-icon qe-heading">
     <ul class="qe-menu">
@@ -44,17 +44,17 @@ QEDITOR_TOOLBAR_HTML = """
     <span class="icon icon-font"></span>
   </span>
   <span class="vline"></span>
-  <a href="#" onclick="return QEditor.action(this,'insertorderedlist');" class="qe-ol"><span class="icon-list-ol"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'insertunorderedlist');" class="qe-ul"><span class="icon-list-ul"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'indent')" class="qe-indent"><span class="icon-indent-right"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'outdent')" class="qe-outdent"><span class="icon-indent-left"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'insertorderedlist');" class="qe-ol"><span class="icon-list-ol" title="Insert Ordered-list"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'insertunorderedlist');" class="qe-ul"><span class="icon-list-ul" title="Insert Unordered-list"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'indent')" class="qe-indent"><span class="icon-indent-right" title="Indent"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'outdent')" class="qe-outdent"><span class="icon-indent-left" title="Outdent"></span></a> 
   <span class="vline"></span> 
-  <a href="#" onclick="return QEditor.action(this,'insertHorizontalRule');" class="qe-hr"><span class="icon-minus"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'formatBlock','blockquote');" class="qe-blockquote"><span class="icon-quote-left"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'formatBlock','pre');" class="qe-pre"><span class="icon-code"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'createLink');" class="qe-link"><span class="icon-link"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'insertimage');" class="qe-image"><span class="icon-picture"></span></a> 
-  <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qe-fullscreen pull-right"><span class="icon-fullscreen"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'insertHorizontalRule');" class="qe-hr"><span class="icon-minus" title="Insert Horizontal Rule"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'formatBlock','blockquote');" class="qe-blockquote"><span class="icon-quote-left" title="Blockquote"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'formatBlock','pre');" class="qe-pre"><span class="icon-code" title="Pre"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'createLink');" class="qe-link"><span class="icon-link" title="Create Link" title="Create Link"></span></a> 
+  <a href="#" onclick="return QEditor.action(this,'insertimage');" class="qe-image"><span class="icon-picture" title="Insert Image"></span></a> 
+  <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qe-fullscreen pull-right"><span class="icon-fullscreen" title="Toggle Fullscreen"></span></a> 
 </div>
 """
 QEDITOR_ALLOW_TAGS_ON_PASTE = "div,p,ul,ol,li,hr,br,b,strong,i,em,img,h2,h3,h4,h5,h6,h7"
