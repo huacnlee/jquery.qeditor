@@ -17,6 +17,10 @@ This is a simple WYSIWYG editor with jQuery.
 - PlaceHolder for WYSIWYG editor;
 - FullScreen;
 
+## Changelogs
+
+You can see all of the release notes in here: [Release notes](https://github.com/huacnlee/jquery.qeditor/releases)
+
 ## Browser support
 
 - Safari

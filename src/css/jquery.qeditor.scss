@@ -10,16 +10,16 @@
   margin: 0 auto 3px auto;
   span.vline { border-left:1px solid #bbb; padding-right:10px; }
   a,.qe-icon {
-    color: #444;
+    color: #666;
     text-decoration: none;
     font-size:14px;
     margin-right:8px;
     &:hover {
-      color: #000;
+      color: #43be4d;
     }
   }
   a.qe-state-on {
-    color:#2956ad;
+    color:#43be4d;
   }
   
   .qe-heading {
