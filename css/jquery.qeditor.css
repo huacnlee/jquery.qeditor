@@ -12,18 +12,22 @@
     border-left: 1px solid #bbb;
     padding-right: 10px; }
   .qeditor_toolbar a, .qeditor_toolbar .qe-icon {
-    color: #444;
+    color: #666;
     text-decoration: none;
     font-size: 14px;
     margin-right: 8px; }
     .qeditor_toolbar a:hover, .qeditor_toolbar .qe-icon:hover {
-      color: #000; }
+      color: #43be4d; }
+  .qeditor_toolbar a.qe-state-on {
+    color: #43be4d; }
   .qeditor_toolbar .qe-heading {
     position: relative; }
     .qeditor_toolbar .qe-heading .qe-menu {
       width: 120px;
       display: none;
       position: absolute;
+      margin: 0;
+      padding: 0;
       left: -25px;
       top: 15px;
       border: 1px solid #eee;
