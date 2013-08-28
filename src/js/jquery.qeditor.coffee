@@ -25,10 +25,10 @@ In Rails application, you can use like this:
 
 QEDITOR_TOOLBAR_HTML = """
 <div class="qeditor_toolbar">
-  <a href="#" onclick="return QEditor.action(this,'bold');" class="qe-bold"><span class="icon-bold" title="Bold"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'italic');" class="qe-italic"><span class="icon-italic" title="Italic"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'underline');" class="qe-underline"><span class="icon-underline" title="Underline"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'strikethrough');" class="qe-strikethrough"><span class="icon-strikethrough" title="Strike-through"></span></a>		 
+  <a href="#" data-action="bold" class="qe-bold"><span class="icon-bold" title="Bold"></span></a> 
+  <a href="#" data-action="italic" class="qe-italic"><span class="icon-italic" title="Italic"></span></a> 
+  <a href="#" data-action="underline" class="qe-underline"><span class="icon-underline" title="Underline"></span></a> 
+  <a href="#" data-action="strikethrough" class="qe-strikethrough"><span class="icon-strikethrough" title="Strike-through"></span></a>		 
   <span class="vline"></span>
   <span class="qe-icon qe-heading">
     <ul class="qe-menu">
@@ -44,16 +44,16 @@ QEDITOR_TOOLBAR_HTML = """
     <span class="icon icon-font"></span>
   </span>
   <span class="vline"></span>
-  <a href="#" onclick="return QEditor.action(this,'insertorderedlist');" class="qe-ol"><span class="icon-list-ol" title="Insert Ordered-list"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'insertunorderedlist');" class="qe-ul"><span class="icon-list-ul" title="Insert Unordered-list"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'indent')" class="qe-indent"><span class="icon-indent-right" title="Indent"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'outdent')" class="qe-outdent"><span class="icon-indent-left" title="Outdent"></span></a> 
+  <a href="#" data-action="insertorderedlist" class="qe-ol"><span class="icon-list-ol" title="Insert Ordered-list"></span></a> 
+  <a href="#" data-action="insertunorderedlist" class="qe-ul"><span class="icon-list-ul" title="Insert Unordered-list"></span></a> 
+  <a href="#" data-action="indent" class="qe-indent"><span class="icon-indent-right" title="Indent"></span></a> 
+  <a href="#" data-action="outdent" class="qe-outdent"><span class="icon-indent-left" title="Outdent"></span></a> 
   <span class="vline"></span> 
-  <a href="#" onclick="return QEditor.action(this,'insertHorizontalRule');" class="qe-hr"><span class="icon-minus" title="Insert Horizontal Rule"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'formatBlock','blockquote');" class="qe-blockquote"><span class="icon-quote-left" title="Blockquote"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'formatBlock','pre');" class="qe-pre"><span class="icon-code" title="Pre"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'createLink');" class="qe-link"><span class="icon-link" title="Create Link" title="Create Link"></span></a> 
-  <a href="#" onclick="return QEditor.action(this,'insertimage');" class="qe-image"><span class="icon-picture" title="Insert Image"></span></a> 
+  <a href="#" data-action="insertHorizontalRule" class="qe-hr"><span class="icon-minus" title="Insert Horizontal Rule"></span></a> 
+  <a href="#" data-action="blockquote" class="qe-blockquote"><span class="icon-quote-left" title="Blockquote"></span></a> 
+  <a href="#" data-action="pre" class="qe-pre"><span class="icon-code" title="Pre"></span></a> 
+  <a href="#" data-action="createLink" class="qe-link"><span class="icon-link" title="Create Link" title="Create Link"></span></a> 
+  <a href="#" data-action="insertimage" class="qe-image"><span class="icon-picture" title="Insert Image"></span></a> 
   <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qe-fullscreen pull-right"><span class="icon-fullscreen" title="Toggle Fullscreen"></span></a> 
 </div>
 """
@@ -61,22 +61,39 @@ QEDITOR_ALLOW_TAGS_ON_PASTE = "div,p,ul,ol,li,hr,br,b,strong,i,em,img,h2,h3,h4,h
 QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE = ["style","class","id","name","width","height"]
 
 window.QEditor = 
+  actions : ['bold','italic','underline','strikethrough','insertunorderedlist','insertorderedlist','blockquote','pre']
+  
   action : (el,a,p) ->
     editor = $(".qeditor_preview",$(el).parent().parent())
     editor.find(".qeditor_placeholder").remove()
     editor.focus()
     p = false if p == null
     
+    # pre, blockquote params fix
+    if a == "blockquote" or a == "pre"
+      p = a
+      a = "formatBlock"
+    
+    
     if a == "createLink"
       p = prompt("Type URL:")
       return false if p.trim().length == 0
     else if a == "insertimage"
       p = prompt("Image URL:")
-      return false if p.trim().length == 0
+      return false if p.trim().length == 0   
     
-    document.execCommand(a, false, p)
+    if QEditor.state(a)
+      # remove style
+      document.execCommand(a,false,null)
+    else
+      # apply style
+      document.execCommand(a, false, p)
+    QEditor.checkSectionState(editor)
     editor.change()
-    false
+    false    
+    
+  state: (action) ->
+    document.queryCommandState(action) == true
   
   prompt : (title) ->
     val = prompt(title)
@@ -111,8 +128,16 @@ window.QEditor =
       containerNode = if node.nodeType == 3 then node.parentNode else node
     return containerNode
     
+  checkSectionState : (editor) ->
+    for a in QEditor.actions
+      link = editor.parent().find(".qeditor_toolbar a[data-action=#{a}]")
+      if QEditor.state(a)
+        link.addClass("qe-state-on")
+      else
+        link.removeClass("qe-state-on")
+    
   version : ->
-    "0.1.1"
+    "0.2.0"
 
 do ($=jQuery)->
   $.fn.qeditor = (options) ->
@@ -142,9 +167,11 @@ do ($=jQuery)->
       editor.attr("placeholder",obj.attr("placeholder"))
       editor.append(placeholder)
       editor.focusin ->
+        QEditor.checkSectionState(editor)
         $(this).find(".qeditor_placeholder").remove()
       editor.blur ->
         t = $(this)
+        QEditor.checkSectionState(editor)
         if t.html().length == 0 or t.html() == "<br>" or t.html() == "<p></p>" 
           $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>' )
     
@@ -168,9 +195,11 @@ do ($=jQuery)->
     
       # attach change event on editor keyup
       editor.keyup (e) ->
+        QEditor.checkSectionState(editor)
         $(this).change()
       
       editor.on "click", (e) ->
+        QEditor.checkSectionState(editor)
         e.stopPropagation()
       
       editor.keydown (e) ->
@@ -205,4 +234,6 @@ do ($=jQuery)->
         link.parent().parent().hide()
         QEditor.action(this,"formatBlock",link.data("name"))
         return false
+      toolbar.find("a[data-action]").click ->
+        QEditor.action(this,$(this).attr("data-action"))
       editor.before(toolbar)

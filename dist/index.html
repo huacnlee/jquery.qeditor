@@ -78,8 +78,8 @@
     // Custom Insert Image icon event
     function changeInsertImageIconWithCustomEvent() {
       var link = toolbar.find("a.qe-image");
-      link.attr("onclick","");
-      link.click(function(){
+      link.attr("data-action","");
+      link.click(function(e){
         alert("New insert image event");
         return false;
       });
