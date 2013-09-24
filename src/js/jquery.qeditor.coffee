@@ -164,7 +164,7 @@ do ($=jQuery)->
     
       # add place holder
       placeholder.text(obj.attr("placeholder"))
-      editor.attr("placeholder",obj.attr("placeholder"))
+      editor.attr("placeholder",obj.attr("placeholder") || "")
       editor.append(placeholder)
       editor.focusin ->
         QEditor.checkSectionState(editor)
