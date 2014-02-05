@@ -25,10 +25,10 @@ In Rails application, you can use like this:
 
 QEDITOR_TOOLBAR_HTML = """
 <div class="qeditor_toolbar">
-  <a href="#" data-action="bold" class="qe-bold"><span class="icon-bold" title="Bold"></span></a> 
-  <a href="#" data-action="italic" class="qe-italic"><span class="icon-italic" title="Italic"></span></a> 
-  <a href="#" data-action="underline" class="qe-underline"><span class="icon-underline" title="Underline"></span></a> 
-  <a href="#" data-action="strikethrough" class="qe-strikethrough"><span class="icon-strikethrough" title="Strike-through"></span></a>		 
+  <a href="#" data-action="bold" class="qe-bold"><span class="fa fa-bold" title="Bold"></span></a> 
+  <a href="#" data-action="italic" class="qe-italic"><span class="fa fa-italic" title="Italic"></span></a> 
+  <a href="#" data-action="underline" class="qe-underline"><span class="fa fa-underline" title="Underline"></span></a> 
+  <a href="#" data-action="strikethrough" class="qe-strikethrough"><span class="fa fa-strikethrough" title="Strike-through"></span></a>		 
   <span class="vline"></span>
   <span class="qe-icon qe-heading">
     <ul class="qe-menu">
@@ -41,20 +41,20 @@ QEDITOR_TOOLBAR_HTML = """
       <li class="qe-hline"></li>
       <li><a href="#" data-name="p" class="qe-p">Paragraph</a></li>
     </ul>
-    <span class="icon icon-font"></span>
+    <span class="icon fa fa-font"></span>
   </span>
   <span class="vline"></span>
-  <a href="#" data-action="insertorderedlist" class="qe-ol"><span class="icon-list-ol" title="Insert Ordered-list"></span></a> 
-  <a href="#" data-action="insertunorderedlist" class="qe-ul"><span class="icon-list-ul" title="Insert Unordered-list"></span></a> 
-  <a href="#" data-action="indent" class="qe-indent"><span class="icon-indent-right" title="Indent"></span></a> 
-  <a href="#" data-action="outdent" class="qe-outdent"><span class="icon-indent-left" title="Outdent"></span></a> 
+  <a href="#" data-action="insertorderedlist" class="qe-ol"><span class="fa fa-list-ol" title="Insert Ordered-list"></span></a> 
+  <a href="#" data-action="insertunorderedlist" class="qe-ul"><span class="fa fa-list-ul" title="Insert Unordered-list"></span></a> 
+  <a href="#" data-action="indent" class="qe-indent"><span class="fa fa-indent" title="Indent"></span></a> 
+  <a href="#" data-action="outdent" class="qe-outdent"><span class="fa fa-outdent" title="Outdent"></span></a> 
   <span class="vline"></span> 
-  <a href="#" data-action="insertHorizontalRule" class="qe-hr"><span class="icon-minus" title="Insert Horizontal Rule"></span></a> 
-  <a href="#" data-action="blockquote" class="qe-blockquote"><span class="icon-quote-left" title="Blockquote"></span></a> 
-  <a href="#" data-action="pre" class="qe-pre"><span class="icon-code" title="Pre"></span></a> 
-  <a href="#" data-action="createLink" class="qe-link"><span class="icon-link" title="Create Link" title="Create Link"></span></a> 
-  <a href="#" data-action="insertimage" class="qe-image"><span class="icon-picture" title="Insert Image"></span></a> 
-  <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qe-fullscreen pull-right"><span class="icon-fullscreen" title="Toggle Fullscreen"></span></a> 
+  <a href="#" data-action="insertHorizontalRule" class="qe-hr"><span class="fa fa-minus" title="Insert Horizontal Rule"></span></a> 
+  <a href="#" data-action="blockquote" class="qe-blockquote"><span class="fa fa-quote-left" title="Blockquote"></span></a> 
+  <a href="#" data-action="pre" class="qe-pre"><span class="fa fa-code" title="Pre"></span></a> 
+  <a href="#" data-action="createLink" class="qe-link"><span class="fa fa-link" title="Create Link" title="Create Link"></span></a> 
+  <a href="#" data-action="insertimage" class="qe-image"><span class="fa fa-picture-o" title="Insert Image"></span></a> 
+  <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qe-fullscreen pull-right"><span class="fa fa-arrows-alt" title="Toggle Fullscreen"></span></a> 
 </div>
 """
 QEDITOR_ALLOW_TAGS_ON_PASTE = "div,p,ul,ol,li,hr,br,b,strong,i,em,img,h2,h3,h4,h5,h6,h7"
@@ -115,12 +115,12 @@ window.QEditor =
     border.data("qe-fullscreen","1")
           .addClass("qeditor_fullscreen")
     border.find(".qeditor_preview").focus()
-    border.find(".qe-fullscreen span").attr("class","icon-resize-small")
+    border.find(".qe-fullscreen span").attr("class","fa fa-compress")
   
   exitFullScreen : () ->
     $(".qeditor_border").removeClass("qeditor_fullscreen")
                         .data("qe-fullscreen","0")
-                        .find(".qe-fullscreen span").attr("class","icon-fullscreen")
+                        .find(".qe-fullscreen span").attr("class","fa fa-arrows-alt")
     
   getCurrentContainerNode : () ->
     if window.getSelection
