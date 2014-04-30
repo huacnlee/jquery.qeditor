@@ -1,11 +1,18 @@
-jquery.qeditor
+jquery.qeditor with bootstrap3
 ==============
 
 This is a simple WYSIWYG editor with jQuery.
 
 [中文介绍请点这里](http://huacnlee.com/blog/jquery-qeditor-introduction/)
 
-<img src="https://f.cloud.github.com/assets/5518/945320/a8f55670-0303-11e3-8cd5-a77e94a85dbf.png" width="626" />
+## screenshot
+
+<img src="http://i.imgur.com/DgRqupP.png">
+
+FullScreen mode
+
+<img src="http://i.imgur.com/DgRqupP.png">
+
 
 ## Featrues
 
@@ -19,7 +26,7 @@ This is a simple WYSIWYG editor with jQuery.
 
 ## Changelogs
 
-You can see all of the release notes in here: [Release notes](https://github.com/huacnlee/jquery.qeditor/releases)
+You can see all of the release notes in here: [Release notes](https://github.com/gihnius/jquery.qeditor/releases)
 
 ## Browser support
 
@@ -30,14 +37,14 @@ You can see all of the release notes in here: [Release notes](https://github.com
 
 ## Demo
 
-You can try the [Demo app](http://huacnlee.github.io/jquery.qeditor).
+You can try the [Demo app](http://cdn.qufor.com/jquery_qeditor/)
 
 ## Usage
 
 ```html
 <textarea id="post_body"></textarea>
 <script type="text/javascript">
-$("#post_body").qeditor({});
+$("#textarea_el").qeditor({});
 </script>
 ```
 
@@ -45,13 +52,15 @@ $("#post_body").qeditor({});
 
 ```js
 // Custom a toolbar icon
-var toolbar = $("#post_body").parent().find(".qeditor_toolbar");
-var link = $("<a href='#'><span class='icon-smile'></span></a>");
-link.click(function(){
+var toolbar_btn_list = $("#textarea_el").parent().find(".qeditor_toolbar > .btn-group").first();
+var btn = $('<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Upload Image"><i class="fa fa-upload"></i></button>');
+
+toolbar_btn_list.append(btn);
+
+btn.click(function(){
   alert("Put you custom toolbar event in here.");
   return false;
 });
-toolbar.append(link);
 ```
 
 
@@ -60,7 +69,7 @@ toolbar.append(link);
 ```
 $ bundle install
 $ rake watch # or use "rake build" to release
-``` 
+```
 
 
 ## License
