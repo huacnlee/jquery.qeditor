@@ -55,7 +55,7 @@ QEDITOR_TOOLBAR_HTML = """
 </div>
 """
 
-QEDITOR_ALLOW_TAGS_ON_PASTE = "div,p,ul,ol,li,hr,br,b,strong,i,em,img,h2,h3,h4,h5,h6,h7"
+QEDITOR_ALLOW_TAGS_ON_PASTE = "a,div,p,ul,ol,li,hr,br,b,strong,i,em,img,h2,h3,h4,h5,h6,h7"
 QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE = ["style","class","id","name","width","height"]
 
 window.QEditor =
