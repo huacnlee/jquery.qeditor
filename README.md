@@ -11,7 +11,7 @@ This is a simple WYSIWYG editor with jQuery.
 
 FullScreen mode
 
-<img src="http://i.imgur.com/DgRqupP.png">
+<img src="http://i.imgur.com/pp56xPi.png">
 
 
 ## Featrues
