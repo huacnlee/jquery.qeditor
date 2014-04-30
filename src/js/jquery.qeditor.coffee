@@ -49,7 +49,7 @@ QEDITOR_TOOLBAR_HTML = """
     <button type="button" data-action="insertimage" class="btn btn-default btn-sm qe-image" data-toggle="popover" title="Insert Image"><span class="fa fa-picture-o"></span></button>
   </div>
   <div class="btn-group pull-right">
-    <button type="button" data-action="removeFormat" class="btn btn-default btn-sm" title="Remove format" data-toggle="tooltip"><span class="fa fa-times"></span></button>
+    <button type="button" data-action="removeFormat" class="btn btn-default btn-sm" title="Remove format" data-toggle="tooltip"><span class="fa fa-eraser"></span></button>
     <button type="button" onclick="return QEditor.toggleFullScreen(this);" class="btn btn-default btn-sm qe-fullscreen" title="Toggle Fullscreen" data-toggle="tooltip"><span class="fa fa-arrows-alt"></span></button>
   </div>
 </div>
