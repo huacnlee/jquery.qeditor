@@ -1,104 +1,59 @@
+
 .qeditor_border {
-  background:#FFF;
-  padding-bottom:20px;
-  text-align: center;
-  position: relative;
-}
-.qeditor_toolbar { 
-  text-align: left;
-  background:#FFF;
-  margin: 0 auto 3px auto;
-  span.vline { border-left:1px solid #bbb; padding-right:10px; }
-  a,.qe-icon {
-    color: #666;
-    text-decoration: none;
-    font-size:14px;
-    margin-right:8px;
-    &:hover {
-      color: #43be4d;
-    }
-  }
-  a.qe-state-on {
-    color:#43be4d;
-  }
-  
-  .qe-heading {
+    background:#FFF;
+    padding-bottom:20px;
+    text-align: center;
     position: relative;
-    .qe-menu {
-      width: 120px;
-      display: none;
-      position: absolute;
-      margin:0; padding:0;
-      left:-25px; top:15px;
-      border:1px solid #eee;
-      border-right: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
-      z-index:9991;
-      background:#FFF;
-      list-style: none;
-      li { display:inline; padding:0; margin:0; }
-      a { 
-        display:block;
-        margin:0;
-        padding:2px 10px;
-        &:hover {
-          background:#f0f0f0;
-        }
-      }
-      .qe-h1 { font-size:17px; font-weight:bold; }
-      .qe-h2 { font-size:16px; font-weight:bold; }
-      .qe-h3 { font-size:15px; font-weight:bold; }
-      .qe-h4 { font-size:14px; font-weight:bold; }
-      .qe-h5 { font-size:13px; font-weight:bold; }
-      .qe-h6 { font-size:12px; font-weight:bold; }
-      .qe-p { font-size:12px; border-top:1px solid #eee; }
-    }
-    &.hover {
-      background:#eee;
-      .qe-menu {
-        background:#fff;
-        display:block;
-      }
-    }
-  }
-  
 }
-.qeditor_preview { 
-  text-align: left;
-  min-height:80px; 
-  margin:0 auto; 
-  overflow-y:scroll;
+
+.qeditor_toolbar {
+    background:#FFF;
+    margin-bottom: 5px;
 }
+
+.qeditor_preview {
+    text-align: left;
+    min-height:80px;
+    margin:0 auto;
+    height: 320px;
+    vertical-align: middle;
+    overflow-y:scroll;
+}
+
 .qeditor_placeholder { color:#999; }
+
 .qeditor_fullscreen {
-  position: fixed;
-  background:#FFF;
-  top:0; left:0; bottom:0; right:0; 
-  z-index: 99990;
-  padding:30px 0;
-  overflow:hidden;
-  
-  .qeditor_preview { 
-    max-width: 900px; 
-    box-sizing: border-box;
-    width: 100%;
-    height: 90%;
-    margin-top: 20px;
-    border:0;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    -webkit-transition: none;
-    -moz-transition: none;
-    -o-transition: none;
-    transition: none;
-    padding:0;
-  }
-  .qeditor_toolbar { 
-    max-width: 900px; 
-    box-sizing: border-box;
-    width: 100%;
-    padding-bottom:10px;
-    a,.qe-icon { font-size:18px; margin-right:8px; }
-  }
+    position: fixed;
+    background:#ddd;
+    top:0; left:0; bottom:0; right:0;
+    padding: 0;
+    z-index: 99990;
+    overflow:hidden;
+
+    .qeditor_preview {
+        max-width: 920px;
+        box-sizing: border-box;
+        width: 100%;
+        height: 90%;
+        margin: 0 auto;
+        padding: 15px 75px;
+        border:0;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
+
+    .qeditor_toolbar {
+        max-width: 920px;
+        box-sizing: border-box;
+        width: 100%;
+        border-bottom: 1px solid #ccc;
+        padding-bottom:15px;
+        padding: 50px 75px 15px 75px;
+        margin: 0 auto;
+    }
 }

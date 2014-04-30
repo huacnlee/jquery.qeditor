@@ -2,7 +2,7 @@
 jquery.qeditor
 ==============
 
-This is a simple WYSIWYG editor with jQuery.
+This is a simple WYSIWYG editor with jQuery, Bootstrap3.1, font-awesome.
 
 ## Author:
 
@@ -24,120 +24,118 @@ In Rails application, you can use like this:
 ###
 
 QEDITOR_TOOLBAR_HTML = """
-<div class="qeditor_toolbar">
-  <a href="#" data-action="bold" class="qe-bold"><span class="fa fa-bold" title="Bold"></span></a> 
-  <a href="#" data-action="italic" class="qe-italic"><span class="fa fa-italic" title="Italic"></span></a> 
-  <a href="#" data-action="underline" class="qe-underline"><span class="fa fa-underline" title="Underline"></span></a> 
-  <a href="#" data-action="strikethrough" class="qe-strikethrough"><span class="fa fa-strikethrough" title="Strike-through"></span></a>		 
-  <span class="vline"></span>
-  <span class="qe-icon qe-heading">
-    <ul class="qe-menu">
-      <li><a href="#" data-name="h1" class="qe-h1">Heading 1</a></li>
-      <li><a href="#" data-name="h2" class="qe-h2">Heading 2</a></li>
-      <li><a href="#" data-name="h3" class="qe-h3">Heading 3</a></li>
-      <li><a href="#" data-name="h4" class="qe-h4">Heading 4</a></li>
-      <li><a href="#" data-name="h5" class="qe-h5">Heading 5</a></li>
-      <li><a href="#" data-name="h6" class="qe-h6">Heading 6</a></li>
-      <li class="qe-hline"></li>
-      <li><a href="#" data-name="p" class="qe-p">Paragraph</a></li>
-    </ul>
-    <span class="icon fa fa-font"></span>
-  </span>
-  <span class="vline"></span>
-  <a href="#" data-action="insertorderedlist" class="qe-ol"><span class="fa fa-list-ol" title="Insert Ordered-list"></span></a> 
-  <a href="#" data-action="insertunorderedlist" class="qe-ul"><span class="fa fa-list-ul" title="Insert Unordered-list"></span></a> 
-  <a href="#" data-action="indent" class="qe-indent"><span class="fa fa-indent" title="Indent"></span></a> 
-  <a href="#" data-action="outdent" class="qe-outdent"><span class="fa fa-outdent" title="Outdent"></span></a> 
-  <span class="vline"></span> 
-  <a href="#" data-action="insertHorizontalRule" class="qe-hr"><span class="fa fa-minus" title="Insert Horizontal Rule"></span></a> 
-  <a href="#" data-action="blockquote" class="qe-blockquote"><span class="fa fa-quote-left" title="Blockquote"></span></a> 
-  <a href="#" data-action="pre" class="qe-pre"><span class="fa fa-code" title="Pre"></span></a> 
-  <a href="#" data-action="createLink" class="qe-link"><span class="fa fa-link" title="Create Link" title="Create Link"></span></a> 
-  <a href="#" data-action="insertimage" class="qe-image"><span class="fa fa-picture-o" title="Insert Image"></span></a> 
-  <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qe-fullscreen pull-right"><span class="fa fa-arrows-alt" title="Toggle Fullscreen"></span></a> 
+<div class="btn-toolbar qeditor_toolbar" role="toolbar">
+  <div class="btn-group">
+    <button type="button" data-action="bold" class="btn btn-default btn-sm qe-bold" title="Bold" data-toggle="tooltip"><span class="fa fa-bold"></span></button>
+    <button type="button" data-action="italic" class="btn btn-default btn-sm qe-italic" title="Italic" data-toggle="tooltip"><span class="fa fa-italic"></span></button>
+    <button type="button" data-action="underline" class="btn btn-default btn-sm qe-underline" title="Underline" data-toggle="tooltip"><span class="fa fa-underline"></span></button>
+    <button type="button" data-action="strikethrough" class="btn btn-default btn-sm qe-strikethrough" title="Strike-through" data-toggle="tooltip"><span class="fa fa-strikethrough"></span></button>
+    <div class="btn-group qe-heading">
+      <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="Heading">
+        <span class="fa fa-text-height"></span>
+      </button>
+      <ul class="dropdown-menu qe-menu" role="menu">
+        <li><a href="#" data-name="h2" class="qe-h2"><h2>Large</h2></a></li>
+        <li><a href="#" data-name="h3" class="qe-h3"><h3>Medium</h3></a></li>
+        <li><a href="#" data-name="h4" class="qe-h4"><h4>Small</h4></a></li>
+      </ul>
+    </div>
+    <button type="button" data-action="insertorderedlist" class="btn btn-default btn-sm qe-ol" title="Insert Ordered-list" data-toggle="tooltip"><span class="fa fa-list-ol"></span></button>
+    <button type="button" data-action="insertunorderedlist" class="btn btn-default btn-sm qe-ul" title="Insert Unordered-list" data-toggle="tooltip"><span class="fa fa-list-ul"></span></button>
+    <button type="button" data-action="insertHorizontalRule" class="btn btn-default btn-sm qe-hr" title="Insert Horizontal Rule" data-toggle="tooltip"><span class="fa fa-minus"></span></button>
+    <button type="button" data-action="blockquote" class="btn btn-default btn-sm qe-blockquote" title="Blockquote" data-toggle="tooltip"><span class="fa fa-quote-left"></span></button>
+    <button type="button" data-action="pre" class="btn btn-default btn-sm qe-pre" title="Pre" data-toggle="tooltip"><span class="fa fa-code"></span></button>
+    <button type="button" data-action="createLink" class="btn btn-default btn-sm qe-link" data-toggle="popover" title="Create Link"><span class="fa fa-link"></span></button>
+    <button type="button" data-action="insertimage" class="btn btn-default btn-sm qe-image" data-toggle="popover" title="Insert Image"><span class="fa fa-picture-o"></span></button>
+  </div>
+  <div class="btn-group pull-right">
+    <button type="button" data-action="removeFormat" class="btn btn-default btn-sm" title="Remove format" data-toggle="tooltip"><span class="fa fa-times"></span></button>
+    <button type="button" onclick="return QEditor.toggleFullScreen(this);" class="btn btn-default btn-sm qe-fullscreen" title="Toggle Fullscreen" data-toggle="tooltip"><span class="fa fa-arrows-alt"></span></button>
+  </div>
 </div>
 """
+
 QEDITOR_ALLOW_TAGS_ON_PASTE = "div,p,ul,ol,li,hr,br,b,strong,i,em,img,h2,h3,h4,h5,h6,h7"
 QEDITOR_DISABLE_ATTRIBUTES_ON_PASTE = ["style","class","id","name","width","height"]
 
-window.QEditor = 
+window.QEditor =
   actions : ['bold','italic','underline','strikethrough','insertunorderedlist','insertorderedlist','blockquote','pre']
-  
+
   action : (el,a,p) ->
-    editor = $(".qeditor_preview",$(el).parent().parent())
+    editor = $(".qeditor_preview", $(el).parent().parent().parent())
     editor.find(".qeditor_placeholder").remove()
     editor.focus()
     p = false if p == null
-    
+
     # pre, blockquote params fix
     if a == "blockquote" or a == "pre"
       p = a
       a = "formatBlock"
-    
-    
+
     if a == "createLink"
       p = prompt("Type URL:")
       return false if p.trim().length == 0
     else if a == "insertimage"
       p = prompt("Image URL:")
-      return false if p.trim().length == 0   
-    
+      return false if p.trim().length == 0
+
     if QEditor.state(a)
       # remove style
       document.execCommand(a,false,null)
     else
       # apply style
       document.execCommand(a, false, p)
-    QEditor.checkSectionState(editor)
+
     editor.change()
-    false    
-    
+    QEditor.checkSectionState(editor)
+    false
+
   state: (action) ->
     document.queryCommandState(action) == true
-  
+
   prompt : (title) ->
     val = prompt(title)
     if val
       return val
     else
       return false
-  
+
   toggleFullScreen : (el) ->
-    border = $(el).parent().parent()
+    border = $(el).parent().parent().parent()
     if border.data("qe-fullscreen") == "1"
       QEditor.exitFullScreen()
     else
       QEditor.enterFullScreen(border)
 
     false
-  
+
   enterFullScreen : (border) ->
     border.data("qe-fullscreen","1")
           .addClass("qeditor_fullscreen")
     border.find(".qeditor_preview").focus()
     border.find(".qe-fullscreen span").attr("class","fa fa-compress")
-  
+
   exitFullScreen : () ->
     $(".qeditor_border").removeClass("qeditor_fullscreen")
                         .data("qe-fullscreen","0")
                         .find(".qe-fullscreen span").attr("class","fa fa-arrows-alt")
-    
+
   getCurrentContainerNode : () ->
     if window.getSelection
       node = window.getSelection().anchorNode
-      containerNode = if node.nodeType == 3 then node.parentNode else node
+      containerNode = if node && node.nodeType == 3 then node.parentNode else node
     return containerNode
-    
+
   checkSectionState : (editor) ->
     for a in QEditor.actions
-      link = editor.parent().find(".qeditor_toolbar a[data-action=#{a}]")
+      link = editor.parent().find(".qeditor_toolbar button[data-action=#{a}]")
       if QEditor.state(a)
-        link.addClass("qe-state-on")
+        link.addClass("active")
       else
-        link.removeClass("qe-state-on")
-    
+        link.removeClass("active")
+
   version : ->
-    "0.2.0"
+    "0.3.0"
 
 do ($=jQuery)->
   $.fn.qeditor = (options) ->
@@ -146,41 +144,40 @@ do ($=jQuery)->
       obj.addClass("qeditor")
       editor = $('<div class="qeditor_preview clearfix" contentEditable="true"></div>')
       placeholder = $('<div class="qeditor_placeholder"></div>')
-    
+
       $(document).keyup (e) ->
         QEditor.exitFullScreen() if e.keyCode == 27
-      
+
       # use <p> tag on enter by default
       document.execCommand('defaultParagraphSeparator', false, 'p')
-    
+
       currentVal = obj.val()
-      # if currentVal.trim().lenth == 0
-        # TODO: default value need in paragraph
-        # currentVal = "<p></p>"
-    
+
       editor.html(currentVal)
       editor.addClass(obj.attr("class"))
-      obj.after(editor)
-    
+
       # add place holder
       placeholder.text(obj.attr("placeholder"))
       editor.attr("placeholder",obj.attr("placeholder") || "")
-      editor.append(placeholder)
+      if currentVal == ''
+        editor.append(placeholder)
+
       editor.focusin ->
         QEditor.checkSectionState(editor)
         $(this).find(".qeditor_placeholder").remove()
+
       editor.blur ->
         t = $(this)
         QEditor.checkSectionState(editor)
-        if t.html().length == 0 or t.html() == "<br>" or t.html() == "<p></p>" 
+        if t.html().length == 0 or t.html() == "<br>" or t.html() == "<p></p>"
           $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>' )
-    
+
       # put value to origin textare when QEditor has changed value
       editor.change ->
         pobj = $(this);
         t = pobj.parent().find('.qeditor')
         t.val(pobj.html())
-    
+
       # watch pasite event, to remove unsafe html tag, attributes
       editor.on "paste", ->
         txt = $(this)
@@ -192,48 +189,55 @@ do ($=jQuery)->
           txt.change()
           true
         ,100
-    
+
       # attach change event on editor keyup
-      editor.keyup (e) ->
+      editor.on 'keyup', (e) ->
         QEditor.checkSectionState(editor)
         $(this).change()
-      
-      editor.on "click", (e) ->
-        QEditor.checkSectionState(editor)
-        e.stopPropagation()
-      
+
+      ## do not need
+      # editor.on "click", (e) ->
+      #   QEditor.checkSectionState(editor)
+      #   e.stopPropagation()
+
       editor.keydown (e) ->
+        # wrap the first line by <p>
+        if $(this).html().trim().length == 0
+          document.execCommand("formatBlock",false,"p")
         node = QEditor.getCurrentContainerNode()
         nodeName = ""
         if node and node.nodeName
           nodeName = node.nodeName.toLowerCase()
-        if e.keyCode == 13 && !(e.shiftKey or e.ctrlKey)
+        if e.keyCode == 13 && !(e.ctrlKey or e.shiftKey)
           if nodeName == "blockquote" or nodeName == "pre"
             e.stopPropagation()
             document.execCommand('InsertParagraph',false)
             document.execCommand("formatBlock",false,"p")
-            document.execCommand('outdent',false)
-            return false             
-          
-      
+            document.execCommand('Outdent',false)
+            return false
+
       obj.hide()
       obj.wrap('<div class="qeditor_border"></div>')
       obj.after(editor)
-    
+
       # render toolbar & binding events
       toolbar = $(QEDITOR_TOOLBAR_HTML)
-      qe_heading = toolbar.find(".qe-heading")
-      qe_heading.mouseenter ->
-        $(this).addClass("hover")
-        $(this).find(".qe-menu").show()
-      qe_heading.mouseleave ->
-        $(this).removeClass("hover")
-        $(this).find(".qe-menu").hide()
+      toolbar.find('button[data-toggle=tooltip], button[data-toggle=popover]').mouseover ->
+        $(this).tooltip('show');
+        return false
+
       toolbar.find(".qe-heading .qe-menu a").click ->
         link = $(this)
-        link.parent().parent().hide()
+        editor.focus()
         QEditor.action(this,"formatBlock",link.data("name"))
+        editor.change()
+        link.parent().parent().parent().removeClass("open")
         return false
-      toolbar.find("a[data-action]").click ->
+
+      toolbar.find("button[data-action]").click ->
+        editor.focus()
         QEditor.action(this,$(this).attr("data-action"))
+        editor.change()
+        QEditor.checkSectionState(editor)
+
       editor.before(toolbar)
