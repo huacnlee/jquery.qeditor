@@ -207,6 +207,9 @@ window.QEditor = {
       obj.wrap('<div class="qeditor_border"></div>');
       obj.after(editor);
       toolbar = $(QEDITOR_TOOLBAR_HTML);
+      toolbar.find('button[data-toggle=tooltip], button[data-toggle=popover]').tooltip({
+        container: 'body'
+      });
       toolbar.find('button[data-toggle=tooltip], button[data-toggle=popover]').mouseover(function() {
         $(this).tooltip('show');
         return false;

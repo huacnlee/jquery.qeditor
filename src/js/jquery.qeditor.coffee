@@ -222,8 +222,9 @@ do ($=jQuery)->
 
       # render toolbar & binding events
       toolbar = $(QEDITOR_TOOLBAR_HTML)
+      toolbar.find('button[data-toggle=tooltip], button[data-toggle=popover]').tooltip container: 'body'
       toolbar.find('button[data-toggle=tooltip], button[data-toggle=popover]').mouseover ->
-        $(this).tooltip('show');
+        $(this).tooltip('show')
         return false
 
       toolbar.find(".qe-heading .qe-menu a").click ->
