@@ -42,7 +42,7 @@ You can try the [Demo app](http://cdn.qufor.com/jquery_qeditor/)
 ## Usage
 
 ```html
-<textarea id="post_body"></textarea>
+<textarea id="textarea_el"></textarea>
 <script type="text/javascript">
 $("#textarea_el").qeditor({});
 </script>
