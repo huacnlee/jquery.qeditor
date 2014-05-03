@@ -26,13 +26,13 @@ In Rails application, you can use like this:
 QEDITOR_TOOLBAR_HTML = """
 <div class="btn-toolbar qeditor_toolbar" role="toolbar">
   <div class="btn-group">
-    <button type="button" data-action="bold" class="btn btn-default btn-sm qe-bold" title="Bold" data-toggle="tooltip"><span class="fa fa-bold"></span></button>
-    <button type="button" data-action="italic" class="btn btn-default btn-sm qe-italic" title="Italic" data-toggle="tooltip"><span class="fa fa-italic"></span></button>
-    <button type="button" data-action="underline" class="btn btn-default btn-sm qe-underline" title="Underline" data-toggle="tooltip"><span class="fa fa-underline"></span></button>
-    <button type="button" data-action="strikethrough" class="btn btn-default btn-sm qe-strikethrough" title="Strike-through" data-toggle="tooltip"><span class="fa fa-strikethrough"></span></button>
+    <button type="button" data-action="bold" class="btn btn-default btn-sm qe-bold" title="Bold" data-toggle="tooltip"><i class="fa fa-bold"></i></button>
+    <button type="button" data-action="italic" class="btn btn-default btn-sm qe-italic" title="Italic" data-toggle="tooltip"><i class="fa fa-italic"></i></button>
+    <button type="button" data-action="underline" class="btn btn-default btn-sm qe-underline" title="Underline" data-toggle="tooltip"><i class="fa fa-underline"></i></button>
+    <button type="button" data-action="strikethrough" class="btn btn-default btn-sm qe-strikethrough" title="Strike-through" data-toggle="tooltip"><i class="fa fa-strikethrough"></i></button>
     <div class="btn-group qe-heading">
       <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="Heading">
-        <span class="fa fa-text-height"></span>
+        <i class="fa fa-text-height"></i>
       </button>
       <ul class="dropdown-menu qe-menu" role="menu">
         <li><a href="#" data-name="h2" class="qe-h2"><h2>Large</h2></a></li>
@@ -40,17 +40,17 @@ QEDITOR_TOOLBAR_HTML = """
         <li><a href="#" data-name="h4" class="qe-h4"><h4>Small</h4></a></li>
       </ul>
     </div>
-    <button type="button" data-action="insertorderedlist" class="btn btn-default btn-sm qe-ol" title="Insert Ordered-list" data-toggle="tooltip"><span class="fa fa-list-ol"></span></button>
-    <button type="button" data-action="insertunorderedlist" class="btn btn-default btn-sm qe-ul" title="Insert Unordered-list" data-toggle="tooltip"><span class="fa fa-list-ul"></span></button>
-    <button type="button" data-action="insertHorizontalRule" class="btn btn-default btn-sm qe-hr" title="Insert Horizontal Rule" data-toggle="tooltip"><span class="fa fa-minus"></span></button>
-    <button type="button" data-action="blockquote" class="btn btn-default btn-sm qe-blockquote" title="Blockquote" data-toggle="tooltip"><span class="fa fa-quote-left"></span></button>
-    <button type="button" data-action="pre" class="btn btn-default btn-sm qe-pre" title="Pre" data-toggle="tooltip"><span class="fa fa-code"></span></button>
-    <button type="button" data-action="createLink" class="btn btn-default btn-sm qe-link" data-toggle="popover" title="Create Link"><span class="fa fa-link"></span></button>
-    <button type="button" data-action="insertimage" class="btn btn-default btn-sm qe-image" data-toggle="popover" title="Insert Image"><span class="fa fa-picture-o"></span></button>
+    <button type="button" data-action="insertorderedlist" class="btn btn-default btn-sm qe-ol" title="Insert Ordered-list" data-toggle="tooltip"><i class="fa fa-list-ol"></i></button>
+    <button type="button" data-action="insertunorderedlist" class="btn btn-default btn-sm qe-ul" title="Insert Unordered-list" data-toggle="tooltip"><i class="fa fa-list-ul"></i></button>
+    <button type="button" data-action="insertHorizontalRule" class="btn btn-default btn-sm qe-hr" title="Insert Horizontal Rule" data-toggle="tooltip"><i class="fa fa-minus"></i></button>
+    <button type="button" data-action="blockquote" class="btn btn-default btn-sm qe-blockquote" title="Blockquote" data-toggle="tooltip"><i class="fa fa-quote-left"></i></button>
+    <button type="button" data-action="pre" class="btn btn-default btn-sm qe-pre" title="Pre" data-toggle="tooltip"><i class="fa fa-code"></i></button>
+    <button type="button" data-action="createLink" class="btn btn-default btn-sm qe-link" data-toggle="popover" title="Create Link"><i class="fa fa-link"></i></button>
+    <button type="button" data-action="insertimage" class="btn btn-default btn-sm qe-image" data-toggle="popover" title="Insert Image"><i class="fa fa-picture-o"></i></button>
   </div>
   <div class="btn-group pull-right">
-    <button type="button" data-action="removeFormat" class="btn btn-default btn-sm" title="Remove format" data-toggle="tooltip"><span class="fa fa-eraser"></span></button>
-    <button type="button" onclick="return QEditor.toggleFullScreen(this);" class="btn btn-default btn-sm qe-fullscreen" title="Toggle Fullscreen" data-toggle="tooltip"><span class="fa fa-arrows-alt"></span></button>
+    <button type="button" data-action="removeFormat" class="btn btn-default btn-sm" title="Remove format" data-toggle="tooltip"><i class="fa fa-eraser"></i></button>
+    <button type="button" onclick="return QEditor.toggleFullScreen(this);" class="btn btn-default btn-sm qe-fullscreen" title="Toggle Fullscreen" data-toggle="tooltip"><i class="fa fa-arrows-alt"></i></button>
   </div>
 </div>
 """
@@ -113,12 +113,12 @@ window.QEditor =
     border.data("qe-fullscreen","1")
           .addClass("qeditor_fullscreen")
     border.find(".qeditor_preview").focus()
-    border.find(".qe-fullscreen span").attr("class","fa fa-compress")
+    border.find(".qe-fullscreen i").attr("class","fa fa-compress")
 
   exitFullScreen : () ->
     $(".qeditor_border").removeClass("qeditor_fullscreen")
                         .data("qe-fullscreen","0")
-                        .find(".qe-fullscreen span").attr("class","fa fa-arrows-alt")
+                        .find(".qe-fullscreen i").attr("class","fa fa-arrows-alt")
 
   getCurrentContainerNode : () ->
     if window.getSelection
