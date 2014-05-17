@@ -86,6 +86,10 @@ window.QEditor =
       # apply style
       document.execCommand(a, false, p)
 
+    # this to replace img pre blockquote by p after removeFormat
+    if a == "removeFormat"
+      document.execCommand("formatBlock", false, "p")
+
     editor.change()
     QEditor.checkSectionState(editor)
     false

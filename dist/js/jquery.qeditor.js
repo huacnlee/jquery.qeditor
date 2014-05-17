@@ -62,6 +62,9 @@ window.QEditor = {
     } else {
       document.execCommand(a, false, p);
     }
+    if (a === "removeFormat") {
+      document.execCommand("formatBlock", false, "p");
+    }
     editor.change();
     QEditor.checkSectionState(editor);
     return false;
