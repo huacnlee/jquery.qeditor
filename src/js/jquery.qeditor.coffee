@@ -32,7 +32,7 @@ QEDITOR_TOOLBAR_HTML = """
     <button type="button" data-action="strikethrough" class="btn btn-default btn-sm qe-strikethrough" title="Strike-through" data-toggle="tooltip"><i class="fa fa-strikethrough"></i></button>
     <div class="btn-group qe-heading">
       <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="Heading">
-        <i class="fa fa-text-height"></i>
+        <i class="fa fa-font"></i>
       </button>
       <ul class="dropdown-menu qe-menu" role="menu">
         <li><a href="#" data-name="h2" class="qe-h2"><h2>Large</h2></a></li>
