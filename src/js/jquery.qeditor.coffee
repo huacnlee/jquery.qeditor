@@ -67,10 +67,10 @@ window.QEditor =
     editor.focus()
     p = false if p == null
 
-    if a == "blockquote"
+    if a == "blockquote" && !(QEditor.isWraped("blockquote") || QEditor.isWraped("pre"))
       QEditor.blockquote()
       return
-    if a == "pre"
+    if a == "pre" && !(QEditor.isWraped("blockquote") || QEditor.isWraped("pre"))
       QEditor.code()
       return
     if a == "createLink"
@@ -222,6 +222,16 @@ window.QEditor =
         $code = $("<code>").html(range.extractContents())
         range.insertNode $code[0]
       selection.selectAllChildren $code[0]
+
+  isWraped: (selector) ->
+    if QEditor.commonAncestorContainer()
+      $(QEditor.commonAncestorContainer()).closest(selector).length isnt 0
+    else
+      false
+
+  commonAncestorContainer: ->
+    selection = document.getSelection()
+    selection.getRangeAt(0).commonAncestorContainer  if selection.rangeCount isnt 0
 
   version : ->
     "0.3.0"
