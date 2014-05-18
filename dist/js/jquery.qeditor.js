@@ -293,10 +293,31 @@ window.QEditor = {
         return $(this).change();
       });
       editor.keydown(function(e) {
-        var html_str;
+        var $pre, html_str, isEnd, isLastLine, node, range, rangeAncestor, selection;
         html_str = $(this).html().trim();
         if (html_str.length === 0 || html_str === "<br>") {
-          return document.execCommand("formatBlock", false, "p");
+          document.execCommand("formatBlock", false, "p");
+        }
+        if (e.keyCode === 13 && !(e.ctrlKey || e.shiftKey)) {
+          if (document.queryCommandValue("formatBlock") === "pre") {
+            event.preventDefault();
+            selection = window.getSelection();
+            range = selection.getRangeAt(0);
+            rangeAncestor = range.commonAncestorContainer;
+            $pre = $(rangeAncestor).closest("pre");
+            range.deleteContents();
+            isLastLine = $pre.find("code").contents().last()[0] === range.endContainer;
+            isEnd = range.endContainer.length === range.endOffset;
+            node = document.createTextNode("\n");
+            range.insertNode(node);
+            if (isLastLine && isEnd) {
+              $pre.find("code").append(document.createTextNode("\n"));
+            }
+            range.setStartAfter(node);
+            range.setEndAfter(node);
+            selection.removeAllRanges();
+            return selection.addRange(range);
+          }
         }
       });
       obj.hide();

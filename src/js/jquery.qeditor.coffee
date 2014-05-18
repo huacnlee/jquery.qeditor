@@ -315,24 +315,24 @@ do ($=jQuery)->
         #     document.execCommand("formatBlock",false,"p")
         #     document.execCommand('Outdent',false)
         #     return false
-        # if e.keyCode == 13 && !(e.ctrlKey or e.shiftKey)
-        #  if document.queryCommandValue("formatBlock") is "pre"
-        #    event.preventDefault()
-        #    selection = window.getSelection()
-        #    range = selection.getRangeAt(0)
-        #    rangeAncestor = range.commonAncestorContainer
-        #    $pre = $(rangeAncestor).closest("pre")
-        #    range.deleteContents()
-        #    isLastLine = ($pre.find("code").contents().last()[0] is range.endContainer)
-        #    isEnd = (range.endContainer.length is range.endOffset)
-        #    node = document.createTextNode("\n")
-        #    range.insertNode node
-        #    # keep two \n at the end, fix webkit eat \n issues.
-        #    $pre.find("code").append document.createTextNode("\n")  if isLastLine and isEnd
-        #    range.setStartAfter node
-        #    range.setEndAfter node
-        #    selection.removeAllRanges()
-        #    selection.addRange range
+        if e.keyCode == 13 && !(e.ctrlKey or e.shiftKey)
+         if document.queryCommandValue("formatBlock") is "pre"
+           event.preventDefault()
+           selection = window.getSelection()
+           range = selection.getRangeAt(0)
+           rangeAncestor = range.commonAncestorContainer
+           $pre = $(rangeAncestor).closest("pre")
+           range.deleteContents()
+           isLastLine = ($pre.find("code").contents().last()[0] is range.endContainer)
+           isEnd = (range.endContainer.length is range.endOffset)
+           node = document.createTextNode("\n")
+           range.insertNode node
+           # keep two \n at the end, fix webkit eat \n issues.
+           $pre.find("code").append document.createTextNode("\n")  if isLastLine and isEnd
+           range.setStartAfter node
+           range.setEndAfter node
+           selection.removeAllRanges()
+           selection.addRange range
 
       obj.hide()
       obj.wrap('<div class="qeditor_border"></div>')
