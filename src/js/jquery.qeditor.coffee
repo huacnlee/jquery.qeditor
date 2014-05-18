@@ -67,11 +67,12 @@ window.QEditor =
     editor.focus()
     p = false if p == null
 
-    # pre, blockquote params fix
-    if a == "blockquote" or a == "pre"
-      p = a
-      a = "formatBlock"
-
+    if a == "blockquote"
+      QEditor.blockquote()
+      return
+    if a == "pre"
+      QEditor.code()
+      return
     if a == "createLink"
       p = prompt("Type URL:")
       return false if p.trim().length == 0
@@ -86,9 +87,9 @@ window.QEditor =
       # apply style
       document.execCommand(a, false, p)
 
-    # this to replace img pre blockquote by p after removeFormat
-    if a == "removeFormat"
-      document.execCommand("formatBlock", false, "p")
+    # # this to replace img pre blockquote by p after removeFormat
+    # if a == "removeFormat" ## TODO: + check selected contains pre blockquote img
+    #   document.execCommand("formatBlock", false, "p")
 
     editor.change()
     QEditor.checkSectionState(editor)
@@ -137,6 +138,90 @@ window.QEditor =
         link.addClass("active")
       else
         link.removeClass("active")
+
+  selectContents: (contents) ->
+    selection = window.getSelection()
+    range = selection.getRangeAt(0)
+    start = contents.first()[0]
+    end = contents.last()[0]
+    range.setStart start, 0
+    range.setEnd end, end.childNodes.length or end.length # text node don't have childNodes
+    selection.removeAllRanges()
+    selection.addRange range
+
+  blockquote :  ->
+    selection = window.getSelection()
+    range = selection.getRangeAt(0)
+    rangeAncestor = range.commonAncestorContainer
+    start = undefined
+    end = undefined
+    $blockquote = $(rangeAncestor).closest("blockquote")
+    if $blockquote.length
+      # remmove blockquote
+      $contents = $blockquote.contents()
+      $blockquote.replaceWith $contents
+      QEditor.selectContents $contents
+    else
+      # wrap blockquote
+      start = $(range.startContainer).closest("p, h1, h2, h3, h4, pre")[0]
+      end = $(range.endContainer).closest("p, h1, h2, h3, h4, pre")[0]
+      range.setStartBefore start
+      range.setEndAfter end
+      $blockquote = $("<blockquote>")
+      $blockquote.html(range.extractContents()).find("blockquote").each ->
+        $(this).replaceWith $(this).html()
+
+      range.insertNode $blockquote[0]
+      selection.selectAllChildren $blockquote[0]
+      $blockquote.after "<p><br></p>"  if $blockquote.next().length is 0
+
+  splitCode: (code) ->
+    code.html $.map(code.text().split("\n"), (line) ->
+      $("<p>").text line  if line isnt ""
+    )
+
+  code: ->
+    selection = window.getSelection()
+    range = selection.getRangeAt(0)
+    rangeAncestor = range.commonAncestorContainer
+    start = undefined
+    end = undefined
+    $contents = undefined
+    $code = $(rangeAncestor).closest("code")
+    if $code.length
+      # remove code
+      if $code.closest("pre").length
+        # pre code
+        QEditor.splitCode $code
+        $contents = $code.contents()
+        $contents = $("<p><br></p>")  if $contents.length is 0
+        $code.closest("pre").replaceWith $contents
+        QEditor.selectContents $contents
+      else
+        # inline code
+        $contents = $code.contents()
+        $code.replaceWith $code.contents()
+        QEditor.selectContents $contents
+    else
+      # wrap code
+      isEmptyRange = (range.toString() is "")
+      isWholeBlock = (range.toString() is $(range.startContainer).closest("p, h1, h2, h3, h4").text())
+      hasBlock = (range.cloneContents().querySelector("p, h1, h2, h3, h4"))
+      if isEmptyRange or isWholeBlock or hasBlock
+        # pre code
+        start = $(range.startContainer).closest("p, h1, h2, h3, h4")[0]
+        end = $(range.endContainer).closest("p, h1, h2, h3, h4")[0]
+        range.setStartBefore start
+        range.setEndAfter end
+        $code = $("<code>").html(range.extractContents())
+        $pre = $("<pre>").html($code)
+        range.insertNode $pre[0]
+        $pre.after "<p><br></p>"  if $pre.next().length is 0
+      else
+        # inline code
+        $code = $("<code>").html(range.extractContents())
+        range.insertNode $code[0]
+      selection.selectAllChildren $code[0]
 
   version : ->
     "0.3.0"
@@ -205,20 +290,39 @@ do ($=jQuery)->
       #   e.stopPropagation()
 
       editor.keydown (e) ->
-        # wrap the first line by <p>
-        if $(this).html().trim().length == 0
+        # wrap the first line by <p> and avoid firefox's <br>
+        html_str = $(this).html().trim()
+        if html_str.length == 0 || html_str == "<br>"
           document.execCommand("formatBlock",false,"p")
-        node = QEditor.getCurrentContainerNode()
-        nodeName = ""
-        if node and node.nodeName
-          nodeName = node.nodeName.toLowerCase()
+        # node = QEditor.getCurrentContainerNode()
+        # nodeName = ""
+        # if node and node.nodeName
+        #   nodeName = node.nodeName.toLowerCase()
+        # if e.keyCode == 13 && !(e.ctrlKey or e.shiftKey)
+        #   if nodeName == "blockquote" or nodeName == "pre"
+        #     e.stopPropagation()
+        #     document.execCommand('InsertParagraph',false)
+        #     document.execCommand("formatBlock",false,"p")
+        #     document.execCommand('Outdent',false)
+        #     return false
         if e.keyCode == 13 && !(e.ctrlKey or e.shiftKey)
-          if nodeName == "blockquote" or nodeName == "pre"
-            e.stopPropagation()
-            document.execCommand('InsertParagraph',false)
-            document.execCommand("formatBlock",false,"p")
-            document.execCommand('Outdent',false)
-            return false
+         if document.queryCommandValue("formatBlock") is "pre"
+           event.preventDefault()
+           selection = window.getSelection()
+           range = selection.getRangeAt(0)
+           rangeAncestor = range.commonAncestorContainer
+           $pre = $(rangeAncestor).closest("pre")
+           range.deleteContents()
+           isLastLine = ($pre.find("code").contents().last()[0] is range.endContainer)
+           isEnd = (range.endContainer.length is range.endOffset)
+           node = document.createTextNode("\n")
+           range.insertNode node
+           # keep two \n at the end, fix webkit eat \n issues.
+           $pre.find("code").append document.createTextNode("\n")  if isLastLine and isEnd
+           range.setStartAfter node
+           range.setEndAfter node
+           selection.removeAllRanges()
+           selection.addRange range
 
       obj.hide()
       obj.wrap('<div class="qeditor_border"></div>')

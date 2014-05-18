@@ -42,9 +42,13 @@ window.QEditor = {
     if (p === null) {
       p = false;
     }
-    if (a === "blockquote" || a === "pre") {
-      p = a;
-      a = "formatBlock";
+    if (a === "blockquote") {
+      QEditor.blockquote();
+      return;
+    }
+    if (a === "pre") {
+      QEditor.code();
+      return;
     }
     if (a === "createLink") {
       p = prompt("Type URL:");
@@ -61,9 +65,6 @@ window.QEditor = {
       document.execCommand(a, false, null);
     } else {
       document.execCommand(a, false, p);
-    }
-    if (a === "removeFormat") {
-      document.execCommand("formatBlock", false, "p");
     }
     editor.change();
     QEditor.checkSectionState(editor);
@@ -121,6 +122,97 @@ window.QEditor = {
       }
     }
     return _results;
+  },
+  selectContents: function(contents) {
+    var end, range, selection, start;
+    selection = window.getSelection();
+    range = selection.getRangeAt(0);
+    start = contents.first()[0];
+    end = contents.last()[0];
+    range.setStart(start, 0);
+    range.setEnd(end, end.childNodes.length || end.length);
+    selection.removeAllRanges();
+    return selection.addRange(range);
+  },
+  blockquote: function() {
+    var $blockquote, $contents, end, range, rangeAncestor, selection, start;
+    selection = window.getSelection();
+    range = selection.getRangeAt(0);
+    rangeAncestor = range.commonAncestorContainer;
+    start = void 0;
+    end = void 0;
+    $blockquote = $(rangeAncestor).closest("blockquote");
+    if ($blockquote.length) {
+      $contents = $blockquote.contents();
+      $blockquote.replaceWith($contents);
+      return QEditor.selectContents($contents);
+    } else {
+      start = $(range.startContainer).closest("p, h1, h2, h3, h4, pre")[0];
+      end = $(range.endContainer).closest("p, h1, h2, h3, h4, pre")[0];
+      range.setStartBefore(start);
+      range.setEndAfter(end);
+      $blockquote = $("<blockquote>");
+      $blockquote.html(range.extractContents()).find("blockquote").each(function() {
+        return $(this).replaceWith($(this).html());
+      });
+      range.insertNode($blockquote[0]);
+      selection.selectAllChildren($blockquote[0]);
+      if ($blockquote.next().length === 0) {
+        return $blockquote.after("<p><br></p>");
+      }
+    }
+  },
+  splitCode: function(code) {
+    return code.html($.map(code.text().split("\n"), function(line) {
+      if (line !== "") {
+        return $("<p>").text(line);
+      }
+    }));
+  },
+  code: function() {
+    var $code, $contents, $pre, end, hasBlock, isEmptyRange, isWholeBlock, range, rangeAncestor, selection, start;
+    selection = window.getSelection();
+    range = selection.getRangeAt(0);
+    rangeAncestor = range.commonAncestorContainer;
+    start = void 0;
+    end = void 0;
+    $contents = void 0;
+    $code = $(rangeAncestor).closest("code");
+    if ($code.length) {
+      if ($code.closest("pre").length) {
+        QEditor.splitCode($code);
+        $contents = $code.contents();
+        if ($contents.length === 0) {
+          $contents = $("<p><br></p>");
+        }
+        $code.closest("pre").replaceWith($contents);
+        return QEditor.selectContents($contents);
+      } else {
+        $contents = $code.contents();
+        $code.replaceWith($code.contents());
+        return QEditor.selectContents($contents);
+      }
+    } else {
+      isEmptyRange = range.toString() === "";
+      isWholeBlock = range.toString() === $(range.startContainer).closest("p, h1, h2, h3, h4").text();
+      hasBlock = range.cloneContents().querySelector("p, h1, h2, h3, h4");
+      if (isEmptyRange || isWholeBlock || hasBlock) {
+        start = $(range.startContainer).closest("p, h1, h2, h3, h4")[0];
+        end = $(range.endContainer).closest("p, h1, h2, h3, h4")[0];
+        range.setStartBefore(start);
+        range.setEndAfter(end);
+        $code = $("<code>").html(range.extractContents());
+        $pre = $("<pre>").html($code);
+        range.insertNode($pre[0]);
+        if ($pre.next().length === 0) {
+          $pre.after("<p><br></p>");
+        }
+      } else {
+        $code = $("<code>").html(range.extractContents());
+        range.insertNode($code[0]);
+      }
+      return selection.selectAllChildren($code[0]);
+    }
   },
   version: function() {
     return "0.3.0";
@@ -187,22 +279,30 @@ window.QEditor = {
         return $(this).change();
       });
       editor.keydown(function(e) {
-        var node, nodeName;
-        if ($(this).html().trim().length === 0) {
+        var $pre, html_str, isEnd, isLastLine, node, range, rangeAncestor, selection;
+        html_str = $(this).html().trim();
+        if (html_str.length === 0 || html_str === "<br>") {
           document.execCommand("formatBlock", false, "p");
         }
-        node = QEditor.getCurrentContainerNode();
-        nodeName = "";
-        if (node && node.nodeName) {
-          nodeName = node.nodeName.toLowerCase();
-        }
         if (e.keyCode === 13 && !(e.ctrlKey || e.shiftKey)) {
-          if (nodeName === "blockquote" || nodeName === "pre") {
-            e.stopPropagation();
-            document.execCommand('InsertParagraph', false);
-            document.execCommand("formatBlock", false, "p");
-            document.execCommand('Outdent', false);
-            return false;
+          if (document.queryCommandValue("formatBlock") === "pre") {
+            event.preventDefault();
+            selection = window.getSelection();
+            range = selection.getRangeAt(0);
+            rangeAncestor = range.commonAncestorContainer;
+            $pre = $(rangeAncestor).closest("pre");
+            range.deleteContents();
+            isLastLine = $pre.find("code").contents().last()[0] === range.endContainer;
+            isEnd = range.endContainer.length === range.endOffset;
+            node = document.createTextNode("\n");
+            range.insertNode(node);
+            if (isLastLine && isEnd) {
+              $pre.find("code").append(document.createTextNode("\n"));
+            }
+            range.setStartAfter(node);
+            range.setEndAfter(node);
+            selection.removeAllRanges();
+            return selection.addRange(range);
           }
         }
       });
