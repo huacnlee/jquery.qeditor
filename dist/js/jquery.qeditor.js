@@ -42,11 +42,11 @@ window.QEditor = {
     if (p === null) {
       p = false;
     }
-    if (a === "blockquote") {
+    if (a === "blockquote" && !(QEditor.isWraped("blockquote") || QEditor.isWraped("pre"))) {
       QEditor.blockquote();
       return;
     }
-    if (a === "pre") {
+    if (a === "pre" && !(QEditor.isWraped("blockquote") || QEditor.isWraped("pre"))) {
       QEditor.code();
       return;
     }
@@ -212,6 +212,20 @@ window.QEditor = {
         range.insertNode($code[0]);
       }
       return selection.selectAllChildren($code[0]);
+    }
+  },
+  isWraped: function(selector) {
+    if (QEditor.commonAncestorContainer()) {
+      return $(QEditor.commonAncestorContainer()).closest(selector).length !== 0;
+    } else {
+      return false;
+    }
+  },
+  commonAncestorContainer: function() {
+    var selection;
+    selection = document.getSelection();
+    if (selection.rangeCount !== 0) {
+      return selection.getRangeAt(0).commonAncestorContainer;
     }
   },
   version: function() {
