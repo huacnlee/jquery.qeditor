@@ -121,6 +121,7 @@ window.QEditor =
     $(".qeditor_border").removeClass("qeditor_fullscreen")
                         .data("qe-fullscreen","0")
                         .find(".qe-fullscreen span").attr("class","fa fa-arrows-alt")
+    $(".qeditor_border").find(".qeditor_preview").focus()
     
   getCurrentContainerNode : () ->
     if window.getSelection
