@@ -18,6 +18,9 @@
       z-index: 2000;
       padding: 10px;
       input[type=text]{
+          width: 100%;
+          box-sizing: border-box;
+          border-radius: 0;
           border: 1px solid #ccc;
           margin: 0px;
           padding: 5px;
