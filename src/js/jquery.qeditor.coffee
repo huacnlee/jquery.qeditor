@@ -23,12 +23,22 @@ In Rails application, you can use like this:
     <%= sanitize(@post.body,:tags => %w(strong b i u strike ol ul li address blockquote pre code br div p), :attributes => %w(src)) %>
 ###
 
+QEDITOR_TOOLTIP_HTML = """
+<div class="qeditor_tooltip" contenteditable="false">
+    <input type="text" autocomplete="off">
+    <div class="actions">
+        <a href="javascript:;" class="cancel">Cancel</a>
+        <a href="javascript:;" class="insert">Insert</a>
+    </div>
+</div>
+"""
+
 QEDITOR_TOOLBAR_HTML = """
 <div class="qeditor_toolbar">
-  <a href="#" data-action="bold" class="qe-bold"><span class="fa fa-bold" title="Bold"></span></a> 
-  <a href="#" data-action="italic" class="qe-italic"><span class="fa fa-italic" title="Italic"></span></a> 
-  <a href="#" data-action="underline" class="qe-underline"><span class="fa fa-underline" title="Underline"></span></a> 
-  <a href="#" data-action="strikethrough" class="qe-strikethrough"><span class="fa fa-strikethrough" title="Strike-through"></span></a>		 
+  <a href="#" data-action="bold" class="qe-icon qe-bold"><span class="fa fa-bold" title="Bold"></span></a> 
+  <a href="#" data-action="italic" class="qe-icon qe-italic"><span class="fa fa-italic" title="Italic"></span></a> 
+  <a href="#" data-action="underline" class="qe-icon qe-underline"><span class="fa fa-underline" title="Underline"></span></a> 
+  <a href="#" data-action="strikethrough" class="qe-icon qe-strikethrough"><span class="fa fa-strikethrough" title="Strike-through"></span></a>		 
   <span class="vline"></span>
   <span class="qe-icon qe-heading">
     <ul class="qe-menu">
@@ -44,17 +54,18 @@ QEDITOR_TOOLBAR_HTML = """
     <span class="icon fa fa-font"></span>
   </span>
   <span class="vline"></span>
-  <a href="#" data-action="insertorderedlist" class="qe-ol"><span class="fa fa-list-ol" title="Insert Ordered-list"></span></a> 
-  <a href="#" data-action="insertunorderedlist" class="qe-ul"><span class="fa fa-list-ul" title="Insert Unordered-list"></span></a> 
-  <a href="#" data-action="indent" class="qe-indent"><span class="fa fa-indent" title="Indent"></span></a> 
-  <a href="#" data-action="outdent" class="qe-outdent"><span class="fa fa-outdent" title="Outdent"></span></a> 
+  <a href="#" data-action="insertorderedlist" class="qe-icon qe-ol"><span class="fa fa-list-ol" title="Insert Ordered-list"></span></a> 
+  <a href="#" data-action="insertunorderedlist" class="qe-icon qe-ul"><span class="fa fa-list-ul" title="Insert Unordered-list"></span></a> 
+  <a href="#" data-action="indent" class="qe-icon qe-indent"><span class="fa fa-indent" title="Indent"></span></a> 
+  <a href="#" data-action="outdent" class="qe-icon qe-outdent"><span class="fa fa-outdent" title="Outdent"></span></a> 
   <span class="vline"></span> 
-  <a href="#" data-action="insertHorizontalRule" class="qe-hr"><span class="fa fa-minus" title="Insert Horizontal Rule"></span></a> 
-  <a href="#" data-action="blockquote" class="qe-blockquote"><span class="fa fa-quote-left" title="Blockquote"></span></a> 
-  <a href="#" data-action="pre" class="qe-pre"><span class="fa fa-code" title="Pre"></span></a> 
-  <a href="#" data-action="createLink" class="qe-link"><span class="fa fa-link" title="Create Link" title="Create Link"></span></a> 
-  <a href="#" data-action="insertimage" class="qe-image"><span class="fa fa-picture-o" title="Insert Image"></span></a> 
-  <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qe-fullscreen pull-right"><span class="fa fa-arrows-alt" title="Toggle Fullscreen"></span></a> 
+  <a href="#" data-action="insertHorizontalRule" class="qe-icon qe-hr"><span class="fa fa-minus" title="Insert Horizontal Rule"></span></a> 
+  <a href="#" data-action="blockquote" class="qe-icon qe-blockquote"><span class="fa fa-quote-left" title="Blockquote"></span></a> 
+  <a href="#" data-action="pre" class="qe-icon qe-pre"><span class="fa fa-code" title="Pre"></span></a> 
+  <a href="#" data-action="createLink" class="qe-icon qe-link"><span class="fa fa-link" title="Create Link" title="Create Link"></span></a> 
+  <a href="#" data-action="insertImage" class="qe-icon qe-image"><span class="fa fa-picture-o" title="Insert Image"></span></a>
+  <a href="#" data-action="undo" class="qe-icon qe-image"><span class="fa fa-undo" title="Undo"></span></a>
+  <a href="#" onclick="return QEditor.toggleFullScreen(this);" class="qe-icon qe-fullscreen pull-right"><span class="fa fa-arrows-alt" title="Toggle Fullscreen"></span></a> 
 </div>
 """
 QEDITOR_ALLOW_TAGS_ON_PASTE = "div,p,ul,ol,li,hr,br,b,strong,i,em,img,h2,h3,h4,h5,h6,h7"
@@ -75,12 +86,9 @@ window.QEditor =
       a = "formatBlock"
     
     
-    if a == "createLink"
-      p = prompt("Type URL:")
-      return false if p.trim().length == 0
-    else if a == "insertimage"
-      p = prompt("Image URL:")
-      return false if p.trim().length == 0   
+    if (a == "createLink" or a == "insertImage") and !p
+      editor.parent().find('.qeditor_tooltip').data({el:el, a:a}).show().find('input').val('http://').focus()
+      return false
     
     if QEditor.state(a)
       # remove style
@@ -92,7 +100,7 @@ window.QEditor =
     editor.change()
     false    
     
-  state: (action) ->
+  state : (action) ->
     document.queryCommandState(action) == true
   
   prompt : (title) ->
@@ -120,7 +128,9 @@ window.QEditor =
   exitFullScreen : () ->
     $(".qeditor_border").removeClass("qeditor_fullscreen")
                         .data("qe-fullscreen","0")
-                        .find(".qe-fullscreen span").attr("class","fa fa-arrows-alt")
+                        .find(".qe-fullscreen span")
+                        .attr("class","fa fa-arrows-alt")
+    $(".qeditor_border").find(".qeditor_preview").focus()
     
   getCurrentContainerNode : () ->
     if window.getSelection
@@ -144,7 +154,7 @@ do ($=jQuery)->
     this.each ->
       obj = $(this)
       obj.addClass("qeditor")
-      editor = $('<div class="qeditor_preview clearfix" contentEditable="true"></div>')
+      editor = $('<div class="qeditor_preview clearfix" contentEditable="true" tabindex="2"></div>')
       placeholder = $('<div class="qeditor_placeholder"></div>')
     
       $(document).keyup (e) ->
@@ -161,7 +171,8 @@ do ($=jQuery)->
       editor.html(currentVal)
       editor.addClass(obj.attr("class"))
       obj.after(editor)
-    
+
+      
       # add place holder
       placeholder.text(obj.attr("placeholder"))
       editor.attr("placeholder",obj.attr("placeholder") || "")
@@ -174,7 +185,7 @@ do ($=jQuery)->
         QEditor.checkSectionState(editor)
         if t.html().length == 0 or t.html() == "<br>" or t.html() == "<p></p>" 
           $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>' )
-    
+
       # put value to origin textare when QEditor has changed value
       editor.change ->
         pobj = $(this);
@@ -237,3 +248,17 @@ do ($=jQuery)->
       toolbar.find("a[data-action]").click ->
         QEditor.action(this,$(this).attr("data-action"))
       editor.before(toolbar)
+
+      # render tooltip & binding events
+      tooltip = $(QEDITOR_TOOLTIP_HTML)
+      tooltip.find(".cancel").click ->
+        tooltip.hide()
+      tooltip.find('.insert').click ->
+        val = tooltip.find('input').val().replace('javascript:','')
+        if val.indexOf('http://') == -1 and val.indexOf('https://') == -1 or val.length <= 8
+          return false
+        data = tooltip.data()
+        QEditor.action(data.el, data.a, val)
+      editor.before(tooltip)
+      editor.focus ->
+          tooltip.hide()
