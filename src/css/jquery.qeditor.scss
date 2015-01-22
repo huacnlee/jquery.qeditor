@@ -3,23 +3,69 @@
   padding-bottom:20px;
   text-align: center;
   position: relative;
+  .qeditor_tooltip{
+      display:none;
+      width: 50%;
+      position: absolute;
+      left: 25%;
+      top: 25%;
+      border: 1px solid #ccc;
+      box-shadow: 0px 0px 5px #ddd;
+      color: #222;
+      background-color: #fff;
+      box-sizing: border-box;
+      white-space: nowrap;
+      z-index: 2000;
+      padding: 10px;
+      input[type=text]{
+          border: 1px solid #ccc;
+          margin: 0px;
+          padding: 5px;
+          margin-bottom:15px;
+          background-color:white;
+          &:focus{
+              border: 1px solid #ccc;
+          }
+      }
+      a{
+          display: inline-block;
+          box-sizing:border-box;
+          width: 50%;
+          text-align: center;
+          border-bottom: 0;
+          color: #06c;
+          border: 1px solid #06c;
+          &:hover{
+              opacity:0.8;
+          }
+          &.insert{
+              color:white;
+              background-color:#06c;
+          }
+      }
+  }
 }
 .qeditor_toolbar { 
   text-align: left;
   background:#FFF;
   margin: 0 auto 3px auto;
   span.vline { border-left:1px solid #bbb; padding-right:10px; }
-  a,.qe-icon {
+  .qe-icon {
+    width:24px;
+    height:24px;
+    display:inline-block;
+    text-align:center;
+    border:1px solid transparent;
     color: #666;
     text-decoration: none;
     font-size:14px;
-    margin-right:8px;
     &:hover {
-      color: #43be4d;
+        border:1px solid #ccc;
     }
   }
-  a.qe-state-on {
-    color:#43be4d;
+  .qe-icon.qe-state-on {
+      border:1px solid #ccc;
+      box-shadow: 0 0 3px 1px #ccc inset;
   }
   
   .qe-heading {
@@ -99,6 +145,6 @@
     box-sizing: border-box;
     width: 100%;
     padding-bottom:10px;
-    a,.qe-icon { font-size:18px; margin-right:8px; }
+    .qe-icon { font-size:18px; margin-right:8px; }
   }
 }
