@@ -186,9 +186,6 @@ do ($=jQuery)->
         if t.html().length == 0 or t.html() == "<br>" or t.html() == "<p></p>" 
           $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>' )
 
-      # add tooltip
-      editor.append(tooltip)
-      
       # put value to origin textare when QEditor has changed value
       editor.change ->
         pobj = $(this);

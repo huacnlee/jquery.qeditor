@@ -156,7 +156,6 @@ window.QEditor = {
           return $(this).html('<div class="qeditor_placeholder">' + $(this).attr("placeholder") + '</div>');
         }
       });
-      editor.append(tooltip);
       editor.change(function() {
         var pobj, t;
         pobj = $(this);
